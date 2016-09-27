@@ -1,0 +1,41 @@
+#
+# define display information
+#
+name: Read Group Editor
+tooltip: |
+    Allows to create and edit a group of sequence read objects
+screenshots: []
+
+icon: icon.png
+
+#
+# define a set of similar methods that might be useful to the user
+#
+suggestions:
+    apps:
+        related:
+            []
+        next:
+            []
+    methods:
+        related:
+            []
+        next:
+            []
+
+#
+# Configure the display and description of parameters
+#
+parameters :
+    Group name :
+        group-name : |
+            Name for this group of reads
+        short-hint : |
+            The name of the group of sequence reads (will be overwritten)
+    Description :
+        description : |
+            Description for this group of sequence reads
+        short-hint : |
+            Description for this group of sequence reads
+description : |
+    <p>This is a method to create and edit a group of sequence read objects.</p>
