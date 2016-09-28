@@ -47,7 +47,7 @@
             }
         },
 	
-    ],
+    ]
     "behavior": {
         "service-mapping": {
             "url": "",
