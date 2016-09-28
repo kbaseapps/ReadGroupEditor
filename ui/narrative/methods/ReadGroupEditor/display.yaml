@@ -27,24 +27,24 @@ suggestions:
 # Configure the display and description of parameters
 #
 parameters :
-    Group name :
-        group-name : |
-            Name for this group of reads
+    group-name :
+        ui-name : |
+            Read Group Name
         short-hint : |
             The name of the group of sequence reads (will be overwritten)
-    Description :
-        description : |
-            Description for this group of sequence reads
+    description :
+        ui-name : |
+            Description
         short-hint : |
             Description for this group of sequence reads
-    Single End Reads objects :
-        reads-objects-single : |
-            More than one single end reads object
+    reads-objects-single :
+        ui-name : |
+            Single-end reads object
         short-hint : |
             More than one single end reads object
-    Paired End Reads objects :
-        reads-objects-paired : |
-            More than one paired end reads object
+    reads-objects-paired :
+        ui-name : |
+            Paired-end reads object
         short-hint : |
             More than one paired end reads object
 description : |
