@@ -37,5 +37,10 @@ parameters :
             Description for this group of sequence reads
         short-hint : |
             Description for this group of sequence reads
+    Reads objects :
+        reads-objects : |
+            More than one reads object
+        short-hint : |
+            More than one reads object
 description : |
     <p>This is a method to create and edit a group of sequence read objects.</p>

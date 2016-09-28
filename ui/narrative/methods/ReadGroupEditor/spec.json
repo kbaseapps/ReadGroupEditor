@@ -11,7 +11,7 @@
     },
     "parameters": [ 
         {
-            "id": "contigset_id",
+            "id": "group-name",
             "optional": false,
             "advanced": false,
             "allow_multiple": false,
@@ -22,7 +22,7 @@
             }
         },
         {
-            "id": "min_length",
+            "id": "description",
             "optional": false,
             "advanced": false,
             "allow_multiple": false,
@@ -32,7 +32,21 @@
                 "validate_as": "int",
                 "min_integer" : 0
             }
-        }
+        },
+	{
+
+            "id": "reads",
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": true,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "validate_as": "int",
+                "min_integer" : 0
+            }
+        },
+	
     ],
     "behavior": {
         "service-mapping": {
@@ -45,12 +59,8 @@
                     "target_property": "workspace"
                 },
                 {
-                    "input_parameter": "contigset_id",
-                    "target_property": "contigset_id"
-                },
-                {
-                    "input_parameter": "min_length",
-                    "target_property": "min_length"
+                    "input_parameter": "reads-objects",
+                    "target_property": "reads-objects"
                 }
             ],
             "output_mapping": [
