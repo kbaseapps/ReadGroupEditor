@@ -11,7 +11,7 @@
     },
     "parameters": [ 
         {
-            "id": "group_name",
+            "id": "group-name",
             "optional": false,
             "advanced": false,
             "allow_multiple": false,
@@ -35,7 +35,7 @@
         },
 	{
 
-            "id": "reads_single",
+            "id": "reads-objects-single",
             "optional": false,
             "advanced": false,
             "allow_multiple": true,
@@ -48,7 +48,7 @@
         },
 	{
 
-            "id": "reads_paired",
+            "id": "reads-objects-paired",
             "optional": false,
             "advanced": false,
             "allow_multiple": true,
@@ -71,20 +71,20 @@
                     "target_property": "workspace"
                 },
                 {
-                    "input_parameter": "group_name",
-                    "target_property": "group_name"
+                    "input_parameter": "group-name",
+                    "target_property": "group-name"
                 },
                 {
                     "input_parameter": "description",
                     "target_property": "description"
                 },
                 {
-                    "input_parameter": "reads_single",
-                    "target_property": "reads_single"
+                    "input_parameter": "reads-objects-single",
+                    "target_property": "reads-objects-single"
                 },
                 {
-                    "input_parameter": "reads_paired",
-                    "target_property": "reads_paired"
+                    "input_parameter": "reads-objects-paired",
+                    "target_property": "reads-objects-paired"
                 }
             ],
             "output_mapping": [
