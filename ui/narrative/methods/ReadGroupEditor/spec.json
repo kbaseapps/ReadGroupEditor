@@ -42,7 +42,7 @@
             "default_values": [ "" ],
             "field_type": "text",
             "text_options": {
-                "valid_ws_types": [ "KBaseGenomes.ContigSet" ],
+                "valid_ws_types": [ "KBaseFile.SingleEndLibrary" ],
                 "min_integer" : 0
             }
         },
@@ -55,10 +55,10 @@
             "default_values": [ "" ],
             "field_type": "text",
             "text_options": {
-                "valid_ws_types": [ "KBaseGenomes.ContigSet" ],
+                "valid_ws_types": [ "KBaseFile.PairedEndLibrary" ],
                 "min_integer" : 0
             }
-        },
+        }
     ],
     "behavior": {
         "service-mapping": {
@@ -85,7 +85,7 @@
                 {
                     "input_parameter": "reads_paired",
                     "target_property": "reads_paired"
-                },
+                }
             ],
             "output_mapping": [
                 {
