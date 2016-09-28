@@ -85,14 +85,6 @@
                     "target_property": "contig_filter_result"
                 },
                 {
-                    "input_parameter": "contigset_id",
-                    "target_property": "input_contigset_id"
-                },
-                {
-                    "input_parameter": "min_length",
-                    "target_property": "input_min_length"
-                },
-                {
                     "narrative_system_variable": "workspace",
                     "target_property": "workspace_name"
                 }
