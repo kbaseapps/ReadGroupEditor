@@ -37,10 +37,15 @@ parameters :
             Description for this group of sequence reads
         short-hint : |
             Description for this group of sequence reads
-    Reads objects :
-        reads-objects : |
-            More than one reads object
+    Single End Reads objects :
+        reads-objects-single : |
+            More than one single end reads object
         short-hint : |
-            More than one reads object
+            More than one single end reads object
+    Paired End Reads objects :
+        reads-objects-paired : |
+            More than one paired end reads object
+        short-hint : |
+            More than one paired end reads object
 description : |
     <p>This is a method to create and edit a group of sequence read objects.</p>
