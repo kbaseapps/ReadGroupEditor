@@ -16,7 +16,7 @@ class ReadGroupEditor:
 
     Module Description:
     A KBase module: ReadGroupEditor
-This sample module contains one small method - filter_contigs.
+This sample module contains one small method - save_read_group.
     '''
 
     ######## WARNING FOR GEVENT USERS #######
@@ -27,7 +27,7 @@ This sample module contains one small method - filter_contigs.
     #########################################
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/kbaseapps/ReadGroupEditor"
-    GIT_COMMIT_HASH = "9de52fdd927c6f592e6e061a82d85dab65d45304"
+    GIT_COMMIT_HASH = "7162aa2372af0fec84f204a45e9c94a6736d218e"
     
     #BEGIN_CLASS_HEADER
     # Class variables and functions can be defined in this block
@@ -43,192 +43,164 @@ This sample module contains one small method - filter_contigs.
         pass
     
 
-    def filter_contigs(self, ctx, params):
+    def save_read_group(self, ctx, params):
         """
-        Filter contigs in a ContigSet by DNA length
-        :param params: instance of type "FilterContigsParams" -> structure:
-           parameter "workspace" of type "workspace_name" (A string
-           representing a workspace name.), parameter "contigset_id" of type
-           "contigset_id" (A string representing a ContigSet id.), parameter
-           "min_length" of Long
-        :returns: instance of type "FilterContigsResults" -> structure:
-           parameter "report_name" of String, parameter "report_ref" of
-           String, parameter "new_contigset_ref" of type "ws_contigset_id"
-           (The workspace ID for a ContigSet data object. @id ws
-           KBaseGenomes.ContigSet), parameter "n_initial_contigs" of Long,
-           parameter "n_contigs_removed" of Long, parameter
-           "n_contigs_remaining" of Long
+        :param params: instance of type "save_read_group_params"
+           (save_read_group() ** **  Method for adding Reads
+           objects to a ReadsSet) -> structure: parameter "workspace_name" of
+           type "workspace_name", parameter "input_reads_names" of type
+           "data_obj_name", parameter "input_readsset_name" of type
+           "data_obj_name", parameter "output_readset_name" of type
+           "data_obj_name", parameter "desc" of String
+        :returns: instance of type "save_read_group_output" -> structure:
+           parameter "report_name" of type "data_obj_name", parameter
+           "report_ref" of type "data_obj_ref"
         """
         # ctx is the context object
         # return variables are: returnVal
-        #BEGIN filter_contigs
-        
-        # Print statements to stdout/stderr are captured and available as the method log
-        print('Starting filter contigs method.')
-        
+        #BEGIN save_read_group
 
-        # Step 1 - Parse/examine the parameters and catch any errors
-        # It is important to check that parameters exist and are defined, and that nice error
-        # messages are returned to the user
-        if 'workspace' not in params:
-            raise ValueError('Parameter workspace is not set in input arguments')
-        workspace_name = params['workspace']
-        if 'contigset_id' not in params:
-            raise ValueError('Parameter contigset_id is not set in input arguments')
-        contigset_id = params['contigset_id']
-        if 'min_length' not in params:
-            raise ValueError('Parameter min_length is not set in input arguments')
-        min_length_orig = params['min_length']
-        min_length = None
-        try:
-            min_length = int(min_length_orig)
-        except ValueError:
-            raise ValueError('Cannot parse integer from min_length parameter (' + str(min_length_orig) + ')')
-        if min_length < 0:
-            raise ValueError('min_length parameter shouldn\'t be negative (' + str(min_length) + ')')
-        
+        print pformat(params)
 
-        # Step 2- Download the input data
-        # Most data will be based to your method by its workspace name.  Use the workspace to pull that data
-        # (or in many cases, subsets of that data).  The user token is used to authenticate with the KBase
-        # data stores and other services.  DO NOT PRINT OUT OR OTHERWISE SAVE USER TOKENS
-        token = ctx['token']
-        wsClient = workspaceService(self.workspaceURL, token=token) 
-        try: 
-            # Note that results from the workspace are returned in a list, and the actual data is saved
-            # in the 'data' key.  So to get the ContigSet data, we get the first element of the list, and
-            # look at the 'data' field.
-            contigSet = wsClient.get_objects([{'ref': workspace_name+'/'+contigset_id}])[0]['data']
-        except:
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
-            orig_error = ''.join('    ' + line for line in lines)
-            raise ValueError('Error loading original ContigSet object from workspace:\n' + orig_error)
-        
-        print('Got ContigSet data.')
-        
+        console = []
+        invalid_msgs = []
+        self.log(console,'Running save_read_group with params=')
+        self.log(console, "\n"+pformat(params))
+        report = ''
+#        report = 'Running KButil_Add_Genomes_to_GenomeSet with params='
+#        report += "\n"+pformat(params)
 
-        # Step 3- Actually perform the filter operation, saving the good contigs to a new list
-        good_contigs = []
-        n_total = 0;
-        n_remaining = 0;
-        for contig in contigSet['contigs']:
-            n_total += 1
-            if len(contig['sequence']) >= min_length:
-                good_contigs.append(contig)
-                n_remaining += 1
+        #### do some basic checks
+        #
+        if 'workspace_name' not in params:
+            raise ValueError('workspace_name parameter is required')
+        if 'desc' not in params:
+            raise ValueError('desc parameter is required')
+        if 'input_reads_names' not in params:
+            raise ValueError('input_reads_names parameter is required')
+        #if 'input_readsset_name' not in params:
+        #    raise ValueError('input_readsset_name parameter is optional')
+        if 'output_readset_name' not in params:
+            raise ValueError('output_readset_name parameter is required')
 
-        # replace the contigs in the contigSet object in local memory
-        contigSet['contigs'] = good_contigs
-        
-        print('Filtered ContigSet to '+str(n_remaining)+' contigs out of '+str(n_total))
-        
 
-        # Step 4- Save the new ContigSet back to the Workspace
-        # When objects are saved, it is important to always set the Provenance of that object.  The basic
-        # provenance info is given to you as part of the context object.  You can add additional information
-        # to the provenance as necessary.  Here we keep a pointer to the input data object.
+        # Build GenomeSet
+        #
+        elements = dict()
+
+        savereadssetparams = {}
+        savereadssetparams['workspace_name'] = params['workspace_name']
+        savereadssetparams['output_object_name'] = params['output_readset_name']
+        readsetdata = {}
+        if(params['desc']):
+            readsetdata['description'] = params['desc']
+        readsetdata['item'] = []
+        count = 0
+        # add new genome
+        for reads_name in params['input_reads_names']:
+            readssetitem = {}
+            readssetitem['ref'] = params['workspace_name']+'/'+reads_name
+            readssetitem['label'] = ''
+
+            readsetdata['items'][count] = readssetitem
+            count = count + 1
+            #try:
+                #ws = workspaceService(self.workspaceURL, token=ctx['token'])
+                #objects = ws.get_objects([{'ref': params['workspace_name']+'/'+params['read_name']}])
+                #readsObj = objects[0]['data']
+                #info = objects[0]['info']
+
+                #readsRef = str(info[6]) + '/' + str(info[0]) + '/' + str(info[4])
+                #type_name = info[2].split('.')[1].split('-')[0]
+                #if type_name != 'SingleEndReads' or type_name != 'PairedEndReads'#  and type != 'GenomeAnnotation':
+                #    raise ValueError("Bad Type:  Should be KBaseFile.SingleEndReads or KBaseFile.PairedEndReads instead of '"+type_name+"'")
+
+            #except Exception as e:
+            #    raise ValueError("Unable to fetch "+params['read_name']+" object from workspace: " + str(e))
+                #to get the full stack trace: traceback.format_exc()
+            
+            #rId = readsObj['id']# if type_name == 'Genome' else genomeObj['genome_annotation_id']
+            #try:
+            #    already_included = elements[rId]
+            #except:
+            #    elements[gId] = dict()
+            #    elements[gId]['ref'] = genomeRef  # the key line
+            #    self.log(console,"adding new element "+gId+" : "+genomeRef)  # DEBUG
+            
+        savereadssetparams['data'] = readsetdata
+
+        # load the method provenance from the context object
+        #
+        self.log(console,"Setting Provenance")  # DEBUG
         provenance = [{}]
         if 'provenance' in ctx:
             provenance = ctx['provenance']
         # add additional info to provenance here, in this case the input data object reference
-        provenance[0]['input_ws_objects']=[workspace_name+'/'+contigset_id]
-
-        obj_info_list = None
         try:
-	        obj_info_list = wsClient.save_objects({
-	                            'workspace':workspace_name,
-	                            'objects': [
-	                                {
-	                                    'type':'KBaseGenomes.ContigSet',
-	                                    'data':contigSet,
-	                                    'name':contigset_id,
-	                                    'provenance':provenance
-	                                }
-	                            ]
-	                        })
+            prov_defined = provenance[0]['input_ws_objects']
         except:
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
-            orig_error = ''.join('    ' + line for line in lines)
-            raise ValueError('Error saving filtered ContigSet object to workspace:\n' + orig_error)
-        
-        info = obj_info_list[0]
-        # Workspace Object Info is a tuple defined as-
-        # absolute ref = info[6] + '/' + info[0] + '/' + info[4]
-        # 0 - obj_id objid - integer valued ID of the object
-        # 1 - obj_name name - the name of the data object
-        # 2 - type_string type - the full type of the data object as: [ModuleName].[Type]-v[major_ver].[minor_ver]
-        # 3 - timestamp save_date
-        # 4 - int version - the object version number
-        # 5 - username saved_by
-        # 6 - ws_id wsid - the unique integer valued ID of the workspace containing this object
-        # 7 - ws_name workspace - the workspace name
-        # 8 - string chsum - md5 of the sorted json content
-        # 9 - int size - size of the json content
-        # 10 - usermeta meta - dictionary of string keys/values of user set or auto generated metadata
-
-        print('saved ContigSet:'+pformat(info))
+            provenance[0]['input_ws_objects'] = []
+        provenance[0]['input_ws_objects'].append(params['workspace_name']+'/'+params['input_reads_names'])
+        provenance[0]['input_ws_objects'].append(params['workspace_name']+'/'+params['output_readset_name'])
+        provenance[0]['service'] = 'ReadGroupEditor'
+        provenance[0]['method'] = 'save_read_group'
 
 
-        # Step 5- Create the Report for this method, and return the results
-        # Create a Report of the method
-        report = 'New ContigSet saved to: '+str(info[7]) + '/'+str(info[1])+'/'+str(info[4])+'\n'
-        report += 'Number of initial contigs:      '+ str(n_total) + '\n'
-        report += 'Number of contigs removed:      '+ str(n_total - n_remaining) + '\n'
-        report += 'Number of contigs in final set: '+ str(n_remaining) + '\n'
+        # Save output object
+        #
+        if len(invalid_msgs) == 0:
+            self.log(console,"Saving ReadsSet")
 
-        reportObj = {
-            'objects_created':[{
-                    'ref':str(info[6]) + '/'+str(info[0])+'/'+str(info[4]), 
-                    'description':'Filtered Contigs'
-                }],
-            'text_message':report
-        }
+            KBaseAPI.save_read_group()
 
-        # generate a unique name for the Method report
-        reportName = 'filter_contigs_report_'+str(hex(uuid.getnode()))
-        report_info_list = None
-        try:
-            report_info_list = wsClient.save_objects({
-                    'id':info[6],
-                    'objects':[
-                        {
-                            'type':'KBaseReport.Report',
-                            'data':reportObj,
-                            'name':reportName,
-                            'meta':{},
-                            'hidden':1, # important!  make sure the report is hidden
-                            'provenance':provenance
-                        }
-                    ]
-                })
-        except:
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
-            orig_error = ''.join('    ' + line for line in lines)
-            raise ValueError('Error saving filtered ContigSet object to workspace:\n' + orig_error)
-        
-        report_info = report_info_list[0]
 
-        print('saved Report: '+pformat(report_info))
+        # build output report object
+        #
+        #self.log(console,"BUILDING REPORT")  # DEBUG
+        #if len(invalid_msgs) == 0:
+        #    self.log(console,"reads in output set "+params['output_readset_name']+": "+str(len(elements.keys())))
+        #    report += 'reads in output set '+params['output_readset_name']+': '+str(len(elements.keys()))+"\n"
+        #    reportObj = {
+        #        'objects_created':[{'ref':params['workspace_name']+'/'+params['output_readset_name'], 'description':'save_read_group'}],
+        #        'text_message':report
+        #        }
+        #else:
+        #    report += "FAILURE:\n\n"+"\n".join(invalid_msgs)+"\n"
+        #    reportObj = {
+        #        'objects_created':[],
+        #        'text_message':report
+        #        }
+        #reportName = 'save_read_group_report_'+str(hex(uuid.getnode()))
+        #ws = workspaceService(self.workspaceURL, token=ctx['token'])
+        #report_obj_info = ws.save_objects({
+#                'id':info[6],
+        #        'workspace':params['workspace_name'],
+        #        'objects':[
+        #            {
+        #                'type':'KBaseReport.Report',
+        #                'data':reportObj,
+        #                'name':reportName,
+        #                'meta':{},
+        #                'hidden':1,
+        #                'provenance':provenance
+        #            }
+        #        ]
+        #    })[0]
 
-        returnVal = {
-                'report_name': reportName,
-                'report_ref': str(report_info[6]) + '/' + str(report_info[0]) + '/' + str(report_info[4]),
-                'new_contigset_ref': str(info[6]) + '/'+str(info[0])+'/'+str(info[4]),
-                'n_initial_contigs':n_total,
-                'n_contigs_removed':n_total-n_remaining,
-                'n_contigs_remaining':n_remaining
-            }
-        
-        print('returning:'+pformat(returnVal))
-                
-        #END filter_contigs
+
+        # Build report and return
+        #
+        self.log(console,"BUILDING RETURN OBJECT")
+        returnVal = { 'report_name': reportName,
+                      'report_ref': str(report_obj_info[6]) + '/' + str(report_obj_info[0]) + '/' + str(report_obj_info[4]),
+                      }
+        self.log(console,"save_read_group DONE") 
+
+        #END save_read_group
 
         # At some point might do deeper type checking...
         if not isinstance(returnVal, dict):
-            raise ValueError('Method filter_contigs return value ' +
+            raise ValueError('Method save_read_group return value ' +
                              'returnVal is not type dict as required.')
         # return the results
         return [returnVal]
