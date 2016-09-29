@@ -17,7 +17,7 @@ import us.kbase.common.service.UnauthorizedException;
  * <p>Original spec-file module name: ReadGroupEditor</p>
  * <pre>
  * A KBase module: ReadGroupEditor
- * This sample module contains one small method - filter_contigs.
+ * This sample module contains one small method - save_read_group.
  * </pre>
  */
 public class ReadGroupEditorClient {
@@ -164,20 +164,19 @@ public class ReadGroupEditorClient {
     }
 
     /**
-     * <p>Original spec-file function name: filter_contigs</p>
+     * <p>Original spec-file function name: save_read_group</p>
      * <pre>
-     * Filter contigs in a ContigSet by DNA length
      * </pre>
-     * @param   params   instance of type {@link us.kbase.readgroupeditor.FilterContigsParams FilterContigsParams}
-     * @return   instance of type {@link us.kbase.readgroupeditor.FilterContigsResults FilterContigsResults}
+     * @param   params   instance of type {@link us.kbase.readgroupeditor.SaveReadGroupParams SaveReadGroupParams} (original type "save_read_group_params")
+     * @return   instance of type {@link us.kbase.readgroupeditor.SaveReadGroupOutput SaveReadGroupOutput} (original type "save_read_group_output")
      * @throws IOException if an IO exception occurs
      * @throws JsonClientException if a JSON RPC exception occurs
      */
-    public FilterContigsResults filterContigs(FilterContigsParams params, RpcContext... jsonRpcContext) throws IOException, JsonClientException {
+    public SaveReadGroupOutput saveReadGroup(SaveReadGroupParams params, RpcContext... jsonRpcContext) throws IOException, JsonClientException {
         List<Object> args = new ArrayList<Object>();
         args.add(params);
-        TypeReference<List<FilterContigsResults>> retType = new TypeReference<List<FilterContigsResults>>() {};
-        List<FilterContigsResults> res = caller.jsonrpcCall("ReadGroupEditor.filter_contigs", args, retType, true, true, jsonRpcContext, this.serviceVersion);
+        TypeReference<List<SaveReadGroupOutput>> retType = new TypeReference<List<SaveReadGroupOutput>>() {};
+        List<SaveReadGroupOutput> res = caller.jsonrpcCall("ReadGroupEditor.save_read_group", args, retType, true, true, jsonRpcContext, this.serviceVersion);
         return res.get(0);
     }
 

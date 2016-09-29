@@ -329,10 +329,10 @@ class Application(object):
         self.serverlog.set_log_level(6)
         self.rpc_service = JSONRPCServiceCustom()
         self.method_authentication = dict()
-        self.rpc_service.add(impl_ReadGroupEditor.filter_contigs,
-                             name='ReadGroupEditor.filter_contigs',
+        self.rpc_service.add(impl_ReadGroupEditor.save_read_group,
+                             name='ReadGroupEditor.save_read_group',
                              types=[dict])
-        self.method_authentication['ReadGroupEditor.filter_contigs'] = 'required'
+        self.method_authentication['ReadGroupEditor.save_read_group'] = 'required'
         self.rpc_service.add(impl_ReadGroupEditor.status,
                              name='ReadGroupEditor.status',
                              types=[dict])

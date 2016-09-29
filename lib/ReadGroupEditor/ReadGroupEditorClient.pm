@@ -27,7 +27,7 @@ ReadGroupEditor::ReadGroupEditorClient
 
 
 A KBase module: ReadGroupEditor
-This sample module contains one small method - filter_contigs.
+This sample module contains one small method - save_read_group.
 
 
 =cut
@@ -110,9 +110,9 @@ sub new
 
 
 
-=head2 filter_contigs
+=head2 save_read_group
 
-  $return = $obj->filter_contigs($params)
+  $return = $obj->save_read_group($params)
 
 =over 4
 
@@ -121,22 +121,20 @@ sub new
 =begin html
 
 <pre>
-$params is a ReadGroupEditor.FilterContigsParams
-$return is a ReadGroupEditor.FilterContigsResults
-FilterContigsParams is a reference to a hash where the following keys are defined:
-	workspace has a value which is a ReadGroupEditor.workspace_name
-	contigset_id has a value which is a ReadGroupEditor.contigset_id
-	min_length has a value which is an int
+$params is a ReadGroupEditor.save_read_group_params
+$return is a ReadGroupEditor.save_read_group_output
+save_read_group_params is a reference to a hash where the following keys are defined:
+	workspace_name has a value which is a ReadGroupEditor.workspace_name
+	input_reads_names has a value which is a ReadGroupEditor.data_obj_name
+	input_readsset_name has a value which is a ReadGroupEditor.data_obj_name
+	output_readset_name has a value which is a ReadGroupEditor.data_obj_name
+	desc has a value which is a string
 workspace_name is a string
-contigset_id is a string
-FilterContigsResults is a reference to a hash where the following keys are defined:
-	report_name has a value which is a string
-	report_ref has a value which is a string
-	new_contigset_ref has a value which is a ReadGroupEditor.ws_contigset_id
-	n_initial_contigs has a value which is an int
-	n_contigs_removed has a value which is an int
-	n_contigs_remaining has a value which is an int
-ws_contigset_id is a string
+data_obj_name is a string
+save_read_group_output is a reference to a hash where the following keys are defined:
+	report_name has a value which is a ReadGroupEditor.data_obj_name
+	report_ref has a value which is a ReadGroupEditor.data_obj_ref
+data_obj_ref is a string
 
 </pre>
 
@@ -144,35 +142,33 @@ ws_contigset_id is a string
 
 =begin text
 
-$params is a ReadGroupEditor.FilterContigsParams
-$return is a ReadGroupEditor.FilterContigsResults
-FilterContigsParams is a reference to a hash where the following keys are defined:
-	workspace has a value which is a ReadGroupEditor.workspace_name
-	contigset_id has a value which is a ReadGroupEditor.contigset_id
-	min_length has a value which is an int
+$params is a ReadGroupEditor.save_read_group_params
+$return is a ReadGroupEditor.save_read_group_output
+save_read_group_params is a reference to a hash where the following keys are defined:
+	workspace_name has a value which is a ReadGroupEditor.workspace_name
+	input_reads_names has a value which is a ReadGroupEditor.data_obj_name
+	input_readsset_name has a value which is a ReadGroupEditor.data_obj_name
+	output_readset_name has a value which is a ReadGroupEditor.data_obj_name
+	desc has a value which is a string
 workspace_name is a string
-contigset_id is a string
-FilterContigsResults is a reference to a hash where the following keys are defined:
-	report_name has a value which is a string
-	report_ref has a value which is a string
-	new_contigset_ref has a value which is a ReadGroupEditor.ws_contigset_id
-	n_initial_contigs has a value which is an int
-	n_contigs_removed has a value which is an int
-	n_contigs_remaining has a value which is an int
-ws_contigset_id is a string
+data_obj_name is a string
+save_read_group_output is a reference to a hash where the following keys are defined:
+	report_name has a value which is a ReadGroupEditor.data_obj_name
+	report_ref has a value which is a ReadGroupEditor.data_obj_ref
+data_obj_ref is a string
 
 
 =end text
 
 =item Description
 
-Filter contigs in a ContigSet by DNA length
+
 
 =back
 
 =cut
 
- sub filter_contigs
+ sub save_read_group
 {
     my($self, @args) = @_;
 
@@ -181,7 +177,7 @@ Filter contigs in a ContigSet by DNA length
     if ((my $n = @args) != 1)
     {
 	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
-							       "Invalid argument count for function filter_contigs (received $n, expecting 1)");
+							       "Invalid argument count for function save_read_group (received $n, expecting 1)");
     }
     {
 	my($params) = @args;
@@ -189,31 +185,31 @@ Filter contigs in a ContigSet by DNA length
 	my @_bad_arguments;
         (ref($params) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 1 \"params\" (value was \"$params\")");
         if (@_bad_arguments) {
-	    my $msg = "Invalid arguments passed to filter_contigs:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	    my $msg = "Invalid arguments passed to save_read_group:\n" . join("", map { "\t$_\n" } @_bad_arguments);
 	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-								   method_name => 'filter_contigs');
+								   method_name => 'save_read_group');
 	}
     }
 
     my $url = $self->{url};
     my $result = $self->{client}->call($url, $self->{headers}, {
-	    method => "ReadGroupEditor.filter_contigs",
+	    method => "ReadGroupEditor.save_read_group",
 	    params => \@args,
     });
     if ($result) {
 	if ($result->is_error) {
 	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
 					       code => $result->content->{error}->{code},
-					       method_name => 'filter_contigs',
+					       method_name => 'save_read_group',
 					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
 					      );
 	} else {
 	    return wantarray ? @{$result->result} : $result->result->[0];
 	}
     } else {
-        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method filter_contigs",
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method save_read_group",
 					    status_line => $self->{client}->status_line,
-					    method_name => 'filter_contigs',
+					    method_name => 'save_read_group',
 				       );
     }
 }
@@ -261,16 +257,16 @@ sub version {
             Bio::KBase::Exceptions::JSONRPC->throw(
                 error => $result->error_message,
                 code => $result->content->{code},
-                method_name => 'filter_contigs',
+                method_name => 'save_read_group',
             );
         } else {
             return wantarray ? @{$result->result} : $result->result->[0];
         }
     } else {
         Bio::KBase::Exceptions::HTTP->throw(
-            error => "Error invoking method filter_contigs",
+            error => "Error invoking method save_read_group",
             status_line => $self->{client}->status_line,
-            method_name => 'filter_contigs',
+            method_name => 'save_read_group',
         );
     }
 }
@@ -307,46 +303,95 @@ sub _validate_version {
 
 
 
-=head2 contigset_id
-
-=over 4
-
-
-
-=item Description
-
-A string representing a ContigSet id.
-
-
-=item Definition
-
-=begin html
-
-<pre>
-a string
-</pre>
-
-=end html
-
-=begin text
-
-a string
-
-=end text
-
-=back
-
-
-
 =head2 workspace_name
 
 =over 4
 
 
 
+=item Definition
+
+=begin html
+
+<pre>
+a string
+</pre>
+
+=end html
+
+=begin text
+
+a string
+
+=end text
+
+=back
+
+
+
+=head2 data_obj_name
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a string
+</pre>
+
+=end html
+
+=begin text
+
+a string
+
+=end text
+
+=back
+
+
+
+=head2 data_obj_ref
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a string
+</pre>
+
+=end html
+
+=begin text
+
+a string
+
+=end text
+
+=back
+
+
+
+=head2 save_read_group_params
+
+=over 4
+
+
+
 =item Description
 
-A string representing a workspace name.
+KButil_Add_Genomes_to_GenomeSet()
+**
+**  Method for adding Reads objects to a ReadsSet
 
 
 =item Definition
@@ -354,14 +399,26 @@ A string representing a workspace name.
 =begin html
 
 <pre>
-a string
+a reference to a hash where the following keys are defined:
+workspace_name has a value which is a ReadGroupEditor.workspace_name
+input_reads_names has a value which is a ReadGroupEditor.data_obj_name
+input_readsset_name has a value which is a ReadGroupEditor.data_obj_name
+output_readset_name has a value which is a ReadGroupEditor.data_obj_name
+desc has a value which is a string
+
 </pre>
 
 =end html
 
 =begin text
 
-a string
+a reference to a hash where the following keys are defined:
+workspace_name has a value which is a ReadGroupEditor.workspace_name
+input_reads_names has a value which is a ReadGroupEditor.data_obj_name
+input_readsset_name has a value which is a ReadGroupEditor.data_obj_name
+output_readset_name has a value which is a ReadGroupEditor.data_obj_name
+desc has a value which is a string
+
 
 =end text
 
@@ -369,7 +426,7 @@ a string
 
 
 
-=head2 FilterContigsParams
+=head2 save_read_group_output
 
 =over 4
 
@@ -381,9 +438,8 @@ a string
 
 <pre>
 a reference to a hash where the following keys are defined:
-workspace has a value which is a ReadGroupEditor.workspace_name
-contigset_id has a value which is a ReadGroupEditor.contigset_id
-min_length has a value which is an int
+report_name has a value which is a ReadGroupEditor.data_obj_name
+report_ref has a value which is a ReadGroupEditor.data_obj_ref
 
 </pre>
 
@@ -392,81 +448,8 @@ min_length has a value which is an int
 =begin text
 
 a reference to a hash where the following keys are defined:
-workspace has a value which is a ReadGroupEditor.workspace_name
-contigset_id has a value which is a ReadGroupEditor.contigset_id
-min_length has a value which is an int
-
-
-=end text
-
-=back
-
-
-
-=head2 ws_contigset_id
-
-=over 4
-
-
-
-=item Description
-
-The workspace ID for a ContigSet data object.
-@id ws KBaseGenomes.ContigSet
-
-
-=item Definition
-
-=begin html
-
-<pre>
-a string
-</pre>
-
-=end html
-
-=begin text
-
-a string
-
-=end text
-
-=back
-
-
-
-=head2 FilterContigsResults
-
-=over 4
-
-
-
-=item Definition
-
-=begin html
-
-<pre>
-a reference to a hash where the following keys are defined:
-report_name has a value which is a string
-report_ref has a value which is a string
-new_contigset_ref has a value which is a ReadGroupEditor.ws_contigset_id
-n_initial_contigs has a value which is an int
-n_contigs_removed has a value which is an int
-n_contigs_remaining has a value which is an int
-
-</pre>
-
-=end html
-
-=begin text
-
-a reference to a hash where the following keys are defined:
-report_name has a value which is a string
-report_ref has a value which is a string
-new_contigset_ref has a value which is a ReadGroupEditor.ws_contigset_id
-n_initial_contigs has a value which is an int
-n_contigs_removed has a value which is an int
-n_contigs_remaining has a value which is an int
+report_name has a value which is a ReadGroupEditor.data_obj_name
+report_ref has a value which is a ReadGroupEditor.data_obj_ref
 
 
 =end text

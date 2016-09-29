@@ -33,24 +33,21 @@ class ReadGroupEditor(object):
             trust_all_ssl_certificates=trust_all_ssl_certificates,
             auth_svc=auth_svc)
 
-    def filter_contigs(self, params, context=None):
+    def save_read_group(self, params, context=None):
         """
-        Filter contigs in a ContigSet by DNA length
-        :param params: instance of type "FilterContigsParams" -> structure:
-           parameter "workspace" of type "workspace_name" (A string
-           representing a workspace name.), parameter "contigset_id" of type
-           "contigset_id" (A string representing a ContigSet id.), parameter
-           "min_length" of Long
-        :returns: instance of type "FilterContigsResults" -> structure:
-           parameter "report_name" of String, parameter "report_ref" of
-           String, parameter "new_contigset_ref" of type "ws_contigset_id"
-           (The workspace ID for a ContigSet data object. @id ws
-           KBaseGenomes.ContigSet), parameter "n_initial_contigs" of Long,
-           parameter "n_contigs_removed" of Long, parameter
-           "n_contigs_remaining" of Long
+        :param params: instance of type "save_read_group_params"
+           (KButil_Add_Genomes_to_GenomeSet() ** **  Method for adding Reads
+           objects to a ReadsSet) -> structure: parameter "workspace_name" of
+           type "workspace_name", parameter "input_reads_names" of type
+           "data_obj_name", parameter "input_readsset_name" of type
+           "data_obj_name", parameter "output_readset_name" of type
+           "data_obj_name", parameter "desc" of String
+        :returns: instance of type "save_read_group_output" -> structure:
+           parameter "report_name" of type "data_obj_name", parameter
+           "report_ref" of type "data_obj_ref"
         """
         return self._client.call_method(
-            'ReadGroupEditor.filter_contigs',
+            'ReadGroupEditor.save_read_group',
             [params], self._service_ver, context)
 
     def status(self, context=None):

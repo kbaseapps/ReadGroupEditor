@@ -1,42 +1,31 @@
 /*
 A KBase module: ReadGroupEditor
-This sample module contains one small method - filter_contigs.
+This sample module contains one small method - save_read_group.
 */
 
 module ReadGroupEditor {
-    /*
-        A string representing a ContigSet id.
-    */
-    typedef string contigset_id;
 
-    /*
-        A string representing a workspace name.
-    */
     typedef string workspace_name;
+    typedef string data_obj_name;
+    typedef string data_obj_ref;
+
+     /* KButil_Add_Genomes_to_GenomeSet()
+    **
+    **  Method for adding Reads objects to a ReadsSet
+    */
+    typedef structure {
+        workspace_name workspace_name;
+        data_obj_name  input_reads_names;
+        data_obj_name  input_readsset_name;
+        data_obj_name  output_readset_name;
+        string desc;
+    } save_read_group_params;
 
     typedef structure {
-        workspace_name workspace;
-        contigset_id contigset_id;
-        int min_length;
-    } FilterContigsParams;
+        data_obj_name report_name;
+        data_obj_ref  report_ref;
+    } save_read_group_output;
 
-    /* 
-        The workspace ID for a ContigSet data object.
-        @id ws KBaseGenomes.ContigSet
-    */
-    typedef string ws_contigset_id;
+    funcdef save_read_group (save_read_group_params params)  returns (save_read_group_output) authentication required;
 
-    typedef structure {
-        string report_name;
-        string report_ref;
-        ws_contigset_id new_contigset_ref;
-        int n_initial_contigs;
-        int n_contigs_removed;
-        int n_contigs_remaining;
-    } FilterContigsResults;
-	
-    /*
-        Filter contigs in a ContigSet by DNA length
-    */
-    funcdef filter_contigs(FilterContigsParams params) returns (FilterContigsResults) authentication required;
 };

@@ -27,7 +27,7 @@ This sample module contains one small method - save_read_group.
     #########################################
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/kbaseapps/ReadGroupEditor"
-    GIT_COMMIT_HASH = "7162aa2372af0fec84f204a45e9c94a6736d218e"
+    GIT_COMMIT_HASH = "020b4d87551517a2c59f4e41066065a527a7bc7f"
     
     #BEGIN_CLASS_HEADER
     # Class variables and functions can be defined in this block
@@ -46,7 +46,7 @@ This sample module contains one small method - save_read_group.
     def save_read_group(self, ctx, params):
         """
         :param params: instance of type "save_read_group_params"
-           (save_read_group() ** **  Method for adding Reads
+           (KButil_Add_Genomes_to_GenomeSet() ** **  Method for adding Reads
            objects to a ReadsSet) -> structure: parameter "workspace_name" of
            type "workspace_name", parameter "input_reads_names" of type
            "data_obj_name", parameter "input_readsset_name" of type
