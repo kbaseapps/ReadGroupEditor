@@ -1,9 +1,9 @@
 #
 # define display information
 #
-name: Read Group Editor
+name: Reads Group Editor
 tooltip: |
-    Allows to create and edit a group of sequence read objects
+    Allows to create and edit a group of sequence reads objects
 screenshots: []
 
 icon: icon.png
@@ -29,12 +29,12 @@ suggestions:
 parameters :
     group-name :
         ui-name : |
-            Read Group Name
+            Reads Group Name
         short-hint : |
             The name of the group of sequence reads (will be overwritten)
     description :
         ui-name : |
-            Description
+            Reads Group Description
         short-hint : |
             Description for this group of sequence reads
     reads-objects-single :
