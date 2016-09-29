@@ -9,7 +9,7 @@ module ReadGroupEditor {
     typedef string data_obj_name;
     typedef string data_obj_ref;
 
-     /* KButil_Add_Genomes_to_GenomeSet()
+     /* save_read_group()
     **
     **  Method for adding Reads objects to a ReadsSet
     */

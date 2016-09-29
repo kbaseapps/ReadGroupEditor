@@ -51,7 +51,7 @@ This sample module contains one small method - save_read_group.
            type "workspace_name", parameter "input_reads_names" of type
            "data_obj_name", parameter "input_readsset_name" of type
            "data_obj_name", parameter "output_readset_name" of type
-           "data_obj_name", parameter "desc" of String
+           "data_obj_name", parameter "desc" of type String
         :returns: instance of type "save_read_group_output" -> structure:
            parameter "report_name" of type "data_obj_name", parameter
            "report_ref" of type "data_obj_ref"
@@ -95,7 +95,7 @@ This sample module contains one small method - save_read_group.
         if(params['desc'] is not None):
             readsetdata['description'] = params['desc']
         readsetdata['items'] = []
-        # add new genome
+        # add new reads
         for reads_name in params['input_reads_names']:
             readssetitem = {}
             readssetitem['ref'] = params['workspace_name']+'/'+reads_name
