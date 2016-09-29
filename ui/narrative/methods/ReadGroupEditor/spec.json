@@ -18,7 +18,7 @@
             "default_values": [ "" ],
             "field_type": "text",
             "text_options": {
-                "valid_ws_types": [ "KBaseGenomes.ContigSet" ]
+                "validate_as": "string",
             }
         },
         {
@@ -42,7 +42,7 @@
             "default_values": [ "" ],
             "field_type": "text",
             "text_options": {
-                "valid_ws_types": [ "KBaseFile.SingleEndLibrary" ],
+                "valid_ws_types": [ "KBaseAssembly.SingleEndLibrary" ],
                 "min_integer" : 0
             }
         },
@@ -55,7 +55,7 @@
             "default_values": [ "" ],
             "field_type": "text",
             "text_options": {
-                "valid_ws_types": [ "KBaseFile.PairedEndLibrary" ],
+                "valid_ws_types": [ "KBaseAssembly.PairedEndLibrary" ],
                 "min_integer" : 0
             }
         }
