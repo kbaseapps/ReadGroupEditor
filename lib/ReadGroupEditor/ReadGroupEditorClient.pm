@@ -124,17 +124,13 @@ sub new
 $params is a ReadGroupEditor.save_read_group_params
 $return is a ReadGroupEditor.save_read_group_output
 save_read_group_params is a reference to a hash where the following keys are defined:
-	workspace_name has a value which is a ReadGroupEditor.workspace_name
-	input_reads_names has a value which is a ReadGroupEditor.data_obj_name
-	input_readsset_name has a value which is a ReadGroupEditor.data_obj_name
-	output_readset_name has a value which is a ReadGroupEditor.data_obj_name
+	workspace_name has a value which is a string
+	output_readset_name has a value which is a string
+	input_reads_list has a value which is a reference to a list where each element is a string
 	desc has a value which is a string
-workspace_name is a string
-data_obj_name is a string
 save_read_group_output is a reference to a hash where the following keys are defined:
-	report_name has a value which is a ReadGroupEditor.data_obj_name
-	report_ref has a value which is a ReadGroupEditor.data_obj_ref
-data_obj_ref is a string
+	report_name has a value which is a string
+	report_ref has a value which is a string
 
 </pre>
 
@@ -145,17 +141,13 @@ data_obj_ref is a string
 $params is a ReadGroupEditor.save_read_group_params
 $return is a ReadGroupEditor.save_read_group_output
 save_read_group_params is a reference to a hash where the following keys are defined:
-	workspace_name has a value which is a ReadGroupEditor.workspace_name
-	input_reads_names has a value which is a ReadGroupEditor.data_obj_name
-	input_readsset_name has a value which is a ReadGroupEditor.data_obj_name
-	output_readset_name has a value which is a ReadGroupEditor.data_obj_name
+	workspace_name has a value which is a string
+	output_readset_name has a value which is a string
+	input_reads_list has a value which is a reference to a list where each element is a string
 	desc has a value which is a string
-workspace_name is a string
-data_obj_name is a string
 save_read_group_output is a reference to a hash where the following keys are defined:
-	report_name has a value which is a ReadGroupEditor.data_obj_name
-	report_ref has a value which is a ReadGroupEditor.data_obj_ref
-data_obj_ref is a string
+	report_name has a value which is a string
+	report_ref has a value which is a string
 
 
 =end text
@@ -329,33 +321,7 @@ a string
 
 
 
-=head2 data_obj_name
-
-=over 4
-
-
-
-=item Definition
-
-=begin html
-
-<pre>
-a string
-</pre>
-
-=end html
-
-=begin text
-
-a string
-
-=end text
-
-=back
-
-
-
-=head2 data_obj_ref
+=head2 output_readset_name
 
 =over 4
 
@@ -389,7 +355,7 @@ a string
 
 =item Description
 
-KButil_Add_Genomes_to_GenomeSet()
+save_read_group()
 **
 **  Method for adding Reads objects to a ReadsSet
 
@@ -400,10 +366,9 @@ KButil_Add_Genomes_to_GenomeSet()
 
 <pre>
 a reference to a hash where the following keys are defined:
-workspace_name has a value which is a ReadGroupEditor.workspace_name
-input_reads_names has a value which is a ReadGroupEditor.data_obj_name
-input_readsset_name has a value which is a ReadGroupEditor.data_obj_name
-output_readset_name has a value which is a ReadGroupEditor.data_obj_name
+workspace_name has a value which is a string
+output_readset_name has a value which is a string
+input_reads_list has a value which is a reference to a list where each element is a string
 desc has a value which is a string
 
 </pre>
@@ -413,10 +378,9 @@ desc has a value which is a string
 =begin text
 
 a reference to a hash where the following keys are defined:
-workspace_name has a value which is a ReadGroupEditor.workspace_name
-input_reads_names has a value which is a ReadGroupEditor.data_obj_name
-input_readsset_name has a value which is a ReadGroupEditor.data_obj_name
-output_readset_name has a value which is a ReadGroupEditor.data_obj_name
+workspace_name has a value which is a string
+output_readset_name has a value which is a string
+input_reads_list has a value which is a reference to a list where each element is a string
 desc has a value which is a string
 
 
@@ -438,8 +402,8 @@ desc has a value which is a string
 
 <pre>
 a reference to a hash where the following keys are defined:
-report_name has a value which is a ReadGroupEditor.data_obj_name
-report_ref has a value which is a ReadGroupEditor.data_obj_ref
+report_name has a value which is a string
+report_ref has a value which is a string
 
 </pre>
 
@@ -448,8 +412,8 @@ report_ref has a value which is a ReadGroupEditor.data_obj_ref
 =begin text
 
 a reference to a hash where the following keys are defined:
-report_name has a value which is a ReadGroupEditor.data_obj_name
-report_ref has a value which is a ReadGroupEditor.data_obj_ref
+report_name has a value which is a string
+report_ref has a value which is a string
 
 
 =end text

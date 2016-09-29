@@ -36,15 +36,12 @@ class ReadGroupEditor(object):
     def save_read_group(self, params, context=None):
         """
         :param params: instance of type "save_read_group_params"
-           (KButil_Add_Genomes_to_GenomeSet() ** **  Method for adding Reads
-           objects to a ReadsSet) -> structure: parameter "workspace_name" of
-           type "workspace_name", parameter "input_reads_names" of type
-           "data_obj_name", parameter "input_readsset_name" of type
-           "data_obj_name", parameter "output_readset_name" of type
-           "data_obj_name", parameter "desc" of String
+           (save_read_group() ** **  Method for adding Reads objects to a
+           ReadsSet) -> structure: parameter "workspace_name" of String,
+           parameter "output_readset_name" of String, parameter
+           "input_reads_list" of list of String, parameter "desc" of String
         :returns: instance of type "save_read_group_output" -> structure:
-           parameter "report_name" of type "data_obj_name", parameter
-           "report_ref" of type "data_obj_ref"
+           parameter "report_name" of String, parameter "report_ref" of String
         """
         return self._client.call_method(
             'ReadGroupEditor.save_read_group',

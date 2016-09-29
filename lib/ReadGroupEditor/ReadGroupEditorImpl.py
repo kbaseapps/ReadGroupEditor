@@ -27,7 +27,7 @@ This sample module contains one small method - save_read_group.
     #########################################
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/kbaseapps/ReadGroupEditor"
-    GIT_COMMIT_HASH = "020b4d87551517a2c59f4e41066065a527a7bc7f"
+    GIT_COMMIT_HASH = "312fd14f3473d069b69a038f12f5ef923fba8c9d"
     
     #BEGIN_CLASS_HEADER
     # Class variables and functions can be defined in this block
@@ -46,15 +46,12 @@ This sample module contains one small method - save_read_group.
     def save_read_group(self, ctx, params):
         """
         :param params: instance of type "save_read_group_params"
-           (KButil_Add_Genomes_to_GenomeSet() ** **  Method for adding Reads
-           objects to a ReadsSet) -> structure: parameter "workspace_name" of
-           type "workspace_name", parameter "input_reads_names" of type
-           "data_obj_name", parameter "input_readsset_name" of type
-           "data_obj_name", parameter "output_readset_name" of type
-           "data_obj_name", parameter "desc" of type String
+           (save_read_group() ** **  Method for adding Reads objects to a
+           ReadsSet) -> structure: parameter "workspace_name" of String,
+           parameter "output_readset_name" of String, parameter
+           "input_reads_list" of list of String, parameter "desc" of String
         :returns: instance of type "save_read_group_output" -> structure:
-           parameter "report_name" of type "data_obj_name", parameter
-           "report_ref" of type "data_obj_ref"
+           parameter "report_name" of String, parameter "report_ref" of String
         """
         # ctx is the context object
         # return variables are: returnVal
@@ -90,7 +87,7 @@ This sample module contains one small method - save_read_group.
 
         savereadssetparams = {}
         savereadssetparams['workspace_name'] = params['workspace_name']
-        savereadssetparams['output_object_name'] = params['output_readset_name']
+        savereadssetparams['output_readset_name'] = params['output_readset_name']
         readsetdata = {}
         if(params['desc'] is not None):
             readsetdata['description'] = params['desc']
@@ -149,7 +146,7 @@ This sample module contains one small method - save_read_group.
         if len(invalid_msgs) == 0:
             self.log(console,"Saving ReadsSet")
 
-            KBaseAPI.save_read_group()
+            KBaseAPI.save_read_group(savereadssetparams)
 
 
         # build output report object

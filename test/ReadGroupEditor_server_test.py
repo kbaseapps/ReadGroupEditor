@@ -75,22 +75,28 @@ class ReadGroupEditorTest(unittest.TestCase):
     def test_filter_contigs_ok(self):
 
         savereadssetparams = {}
-        savereadssetparams['workspace_name'] = '11641'#params['workspace_name']
-        savereadssetparams['output_object_name'] = "testReadSet"#params['output_readset_name']
-        readsetdata = {}
-        readsetdata['description'] = "first read set"
-        readsetdata['items'] = []
+        savereadssetparams['workspace_name'] = '11641'#
+        savereadssetparams['output_readset_name'] = "testReadSet"
+        savereadssetparams['input_reads_list'] = ['Ath_hy5_rep1.fastq', 'Ath_WT_rep1.fastq']
+        savereadssetparams['desc'] = "first read set"
 
-        readssetitem = {}
-        readssetitem['ref'] = savereadssetparams['workspace_name']+'/'+'Ath_hy5_rep1.fastq'
-        readssetitem['label'] = ''
-        readsetdata['items'].append(readssetitem)
+        #savereadssetparams = {}
+        #savereadssetparams['workspace_name'] = '11641'#params['workspace_name']
+        #savereadssetparams['output_object_name'] = "testReadSet"#params['output_readset_name']
+        #readsetdata = {}
+        #readsetdata['description'] = "first read set"
+        #readsetdata['items'] = []
 
-        readssetitem = {}
-        readssetitem['ref'] = savereadssetparams['workspace_name']+'/'+'Ath_WT_rep1.fastq'
-        readssetitem['label'] = ''
-        readsetdata['items'].append(readssetitem)
+        ##readssetitem = {}
+        #readssetitem['ref'] = savereadssetparams['workspace_name']+'/'+'Ath_hy5_rep1.fastq'
+        #readssetitem['label'] = ''
+        #readsetdata['items'].append(readssetitem)
 
-        savereadssetparams['data'] = readsetdata
+        ##readssetitem = {}
+        #readssetitem['ref'] = savereadssetparams['workspace_name']+'/'+'Ath_WT_rep1.fastq'
+        #readssetitem['label'] = ''
+        #readsetdata['items'].append(readssetitem)
+
+        #savereadssetparams['data'] = readsetdata
 
         save_read_group(savereadssetparams)
