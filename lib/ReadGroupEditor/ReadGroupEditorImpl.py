@@ -92,18 +92,16 @@ This sample module contains one small method - save_read_group.
         savereadssetparams['workspace_name'] = params['workspace_name']
         savereadssetparams['output_object_name'] = params['output_readset_name']
         readsetdata = {}
-        if(params['desc']):
+        if(params['desc'] is not None):
             readsetdata['description'] = params['desc']
-        readsetdata['item'] = []
-        count = 0
+        readsetdata['items'] = []
         # add new genome
         for reads_name in params['input_reads_names']:
             readssetitem = {}
             readssetitem['ref'] = params['workspace_name']+'/'+reads_name
             readssetitem['label'] = ''
 
-            readsetdata['items'][count] = readssetitem
-            count = count + 1
+            readsetdata['items'].append(readssetitem)
             #try:
                 #ws = workspaceService(self.workspaceURL, token=ctx['token'])
                 #objects = ws.get_objects([{'ref': params['workspace_name']+'/'+params['read_name']}])
@@ -140,8 +138,8 @@ This sample module contains one small method - save_read_group.
             prov_defined = provenance[0]['input_ws_objects']
         except:
             provenance[0]['input_ws_objects'] = []
-        provenance[0]['input_ws_objects'].append(params['workspace_name']+'/'+params['input_reads_names'])
-        provenance[0]['input_ws_objects'].append(params['workspace_name']+'/'+params['output_readset_name'])
+        for reads_name in params['input_reads_names']:
+            provenance[0]['input_ws_objects'].append(params['workspace_name']+'/'+reads_name)
         provenance[0]['service'] = 'ReadGroupEditor'
         provenance[0]['method'] = 'save_read_group'
 
