@@ -29,12 +29,10 @@
             "default_values": [ "" ],
             "field_type": "text",
             "text_options": {
-                "validate_as": "int",
-                "min_integer" : 0
+                "validate_as": "string"
             }
         },
-	{
-
+	    {
             "id": "reads-objects-single",
             "optional": false,
             "advanced": false,
@@ -42,8 +40,7 @@
             "default_values": [ "" ],
             "field_type": "text",
             "text_options": {
-                "valid_ws_types": [ "KBaseAssembly.SingleEndLibrary" ],
-                "min_integer" : 0
+                "valid_ws_types": [ "KBaseAssembly.SingleEndLibrary" ]
             }
         },
 	{
@@ -55,8 +52,7 @@
             "default_values": [ "" ],
             "field_type": "text",
             "text_options": {
-                "valid_ws_types": [ "KBaseAssembly.PairedEndLibrary" ],
-                "min_integer" : 0
+                "valid_ws_types": [ "KBaseAssembly.PairedEndLibrary" ]
             }
         }
     ],
