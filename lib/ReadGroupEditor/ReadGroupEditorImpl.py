@@ -1,11 +1,35 @@
 # -*- coding: utf-8 -*-
 #BEGIN_HEADER
 # The header block is where all import statments should live
+import os
+import shutil
+import hashlib
+import subprocess
+import requests
+import re
+from datetime import datetime
+import numpy as np
+import gzip
+
+from Bio import SeqIO
+from Bio.Seq import Seq
+from Bio.SeqRecord import SeqRecord
+from Bio.Alphabet import generic_protein
+from biokbase.workspace.client import Workspace as workspaceService
+from requests_toolbelt import MultipartEncoder  # added
+from biokbase.AbstractHandle.Client import AbstractHandle as HandleService  # added
+
+from SetAPI.SetAPIClient import SetAPI
+
+# silence whining
+import requests
+requests.packages.urllib3.disable_warnings()
+
+
 import sys
 import traceback
 import uuid
 from pprint import pprint, pformat
-from biokbase.workspace.client import Workspace as workspaceService
 #END_HEADER
 
 
@@ -27,7 +51,7 @@ This sample module contains one small method - save_read_group.
     #########################################
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/kbaseapps/ReadGroupEditor"
-    GIT_COMMIT_HASH = "312fd14f3473d069b69a038f12f5ef923fba8c9d"
+    GIT_COMMIT_HASH = "35d3df0421f1a8c5cbb4c661c4042c5b691d2c8f"
     
     #BEGIN_CLASS_HEADER
     # Class variables and functions can be defined in this block
@@ -61,8 +85,8 @@ This sample module contains one small method - save_read_group.
 
         console = []
         invalid_msgs = []
-        self.log(console,'Running save_read_group with params=')
-        self.log(console, "\n"+pformat(params))
+        #self.log(console,'Running save_read_group with params=')
+        #self.log(console, "\n"+pformat(params))
         report = ''
 #        report = 'Running KButil_Add_Genomes_to_GenomeSet with params='
 #        report += "\n"+pformat(params)
@@ -73,8 +97,8 @@ This sample module contains one small method - save_read_group.
             raise ValueError('workspace_name parameter is required')
         if 'desc' not in params:
             raise ValueError('desc parameter is required')
-        if 'input_reads_names' not in params:
-            raise ValueError('input_reads_names parameter is required')
+        if 'input_reads_list' not in params:
+            raise ValueError('input_reads_list parameter is required')
         #if 'input_readsset_name' not in params:
         #    raise ValueError('input_readsset_name parameter is optional')
         if 'output_readset_name' not in params:
@@ -93,7 +117,7 @@ This sample module contains one small method - save_read_group.
             readsetdata['description'] = params['desc']
         readsetdata['items'] = []
         # add new reads
-        for reads_name in params['input_reads_names']:
+        for reads_name in params['input_reads_list']:
             readssetitem = {}
             readssetitem['ref'] = params['workspace_name']+'/'+reads_name
             readssetitem['label'] = ''
@@ -126,7 +150,7 @@ This sample module contains one small method - save_read_group.
 
         # load the method provenance from the context object
         #
-        self.log(console,"Setting Provenance")  # DEBUG
+        #self.log(console,"Setting Provenance")  # DEBUG
         provenance = [{}]
         if 'provenance' in ctx:
             provenance = ctx['provenance']
@@ -135,7 +159,7 @@ This sample module contains one small method - save_read_group.
             prov_defined = provenance[0]['input_ws_objects']
         except:
             provenance[0]['input_ws_objects'] = []
-        for reads_name in params['input_reads_names']:
+        for reads_name in params['input_reads_list']:
             provenance[0]['input_ws_objects'].append(params['workspace_name']+'/'+reads_name)
         provenance[0]['service'] = 'ReadGroupEditor'
         provenance[0]['method'] = 'save_read_group'
@@ -143,10 +167,10 @@ This sample module contains one small method - save_read_group.
 
         # Save output object
         #
-        if len(invalid_msgs) == 0:
-            self.log(console,"Saving ReadsSet")
+        #if len(invalid_msgs) == 0:
+        #    self.log(console,"Saving ReadsSet")
 
-            KBaseAPI.save_read_group(savereadssetparams)
+        save_reads_set_v1(savereadssetparams)
 
 
         # build output report object
@@ -185,11 +209,11 @@ This sample module contains one small method - save_read_group.
 
         # Build report and return
         #
-        self.log(console,"BUILDING RETURN OBJECT")
+        #self.log(console,"BUILDING RETURN OBJECT")
         returnVal = { 'report_name': reportName,
                       'report_ref': str(report_obj_info[6]) + '/' + str(report_obj_info[0]) + '/' + str(report_obj_info[4]),
                       }
-        self.log(console,"save_read_group DONE") 
+        #self.log(console,"save_read_group DONE") 
 
         #END save_read_group
 

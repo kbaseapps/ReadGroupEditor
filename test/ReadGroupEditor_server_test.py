@@ -99,4 +99,6 @@ class ReadGroupEditorTest(unittest.TestCase):
 
         #savereadssetparams['data'] = readsetdata
 
-        save_read_group(savereadssetparams)
+        result = self.getImpl().save_read_group(self.getContext(),savereadssetparams)
+        print('RESULT:')
+        pprint(result)
