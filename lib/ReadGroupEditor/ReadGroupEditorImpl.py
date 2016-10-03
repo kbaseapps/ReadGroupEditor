@@ -93,6 +93,9 @@ This sample module contains one small method - save_read_group.
         if(params['desc'] is not None):
             readsetdata['description'] = params['desc']
         readsetdata['items'] = []
+
+        print "WS "+params['workspace_name']
+        print "READS "+str(params['input_reads_list'])
         # add new reads
         for reads_name in params['input_reads_list']:
             readssetitem = {}
