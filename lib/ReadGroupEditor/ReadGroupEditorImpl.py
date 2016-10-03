@@ -2,34 +2,14 @@
 #BEGIN_HEADER
 # The header block is where all import statments should live
 import os
-import shutil
-import hashlib
-import subprocess
-import requests
-import re
-from datetime import datetime
-import numpy as np
-import gzip
-
-from Bio import SeqIO
-from Bio.Seq import Seq
-from Bio.SeqRecord import SeqRecord
-from Bio.Alphabet import generic_protein
-from biokbase.workspace.client import Workspace as workspaceService
-from requests_toolbelt import MultipartEncoder  # added
-from biokbase.AbstractHandle.Client import AbstractHandle as HandleService  # added
-
-from SetAPI.SetAPIClient import SetAPI
+import uuid
 
 # silence whining
 import requests
 requests.packages.urllib3.disable_warnings()
 
-
-import sys
-import traceback
-import uuid
-from pprint import pprint, pformat
+from biokbase.workspace.client import Workspace as workspaceService
+from SetAPI.SetAPIClient import SetAPI
 #END_HEADER
 
 
@@ -50,8 +30,8 @@ This sample module contains one small method - save_read_group.
     # the latter method is running.
     #########################################
     VERSION = "0.0.1"
-    GIT_URL = "https://github.com/kbaseapps/ReadGroupEditor"
-    GIT_COMMIT_HASH = "35d3df0421f1a8c5cbb4c661c4042c5b691d2c8f"
+    GIT_URL = "https://github.com/mlhenderson/ReadGroupEditor"
+    GIT_COMMIT_HASH = "14be193ab64756d41917e9a424ce39456ae6e148"
     
     #BEGIN_CLASS_HEADER
     # Class variables and functions can be defined in this block
@@ -65,7 +45,6 @@ This sample module contains one small method - save_read_group.
         self.workspaceURL = config['workspace-url']
         #END_CONSTRUCTOR
         pass
-    
 
     def save_read_group(self, ctx, params):
         """
@@ -80,8 +59,6 @@ This sample module contains one small method - save_read_group.
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN save_read_group
-
-        print pformat(params)
 
         console = []
         invalid_msgs = []
@@ -111,7 +88,7 @@ This sample module contains one small method - save_read_group.
 
         savereadssetparams = {}
         savereadssetparams['workspace_name'] = params['workspace_name']
-        savereadssetparams['output_readset_name'] = params['output_readset_name']
+        savereadssetparams['output_object_name'] = params['output_readset_name']
         readsetdata = {}
         if(params['desc'] is not None):
             readsetdata['description'] = params['desc']
@@ -121,31 +98,8 @@ This sample module contains one small method - save_read_group.
             readssetitem = {}
             readssetitem['ref'] = params['workspace_name']+'/'+reads_name
             readssetitem['label'] = ''
-
             readsetdata['items'].append(readssetitem)
-            #try:
-                #ws = workspaceService(self.workspaceURL, token=ctx['token'])
-                #objects = ws.get_objects([{'ref': params['workspace_name']+'/'+params['read_name']}])
-                #readsObj = objects[0]['data']
-                #info = objects[0]['info']
 
-                #readsRef = str(info[6]) + '/' + str(info[0]) + '/' + str(info[4])
-                #type_name = info[2].split('.')[1].split('-')[0]
-                #if type_name != 'SingleEndReads' or type_name != 'PairedEndReads'#  and type != 'GenomeAnnotation':
-                #    raise ValueError("Bad Type:  Should be KBaseFile.SingleEndReads or KBaseFile.PairedEndReads instead of '"+type_name+"'")
-
-            #except Exception as e:
-            #    raise ValueError("Unable to fetch "+params['read_name']+" object from workspace: " + str(e))
-                #to get the full stack trace: traceback.format_exc()
-            
-            #rId = readsObj['id']# if type_name == 'Genome' else genomeObj['genome_annotation_id']
-            #try:
-            #    already_included = elements[rId]
-            #except:
-            #    elements[gId] = dict()
-            #    elements[gId]['ref'] = genomeRef  # the key line
-            #    self.log(console,"adding new element "+gId+" : "+genomeRef)  # DEBUG
-            
         savereadssetparams['data'] = readsetdata
 
         # load the method provenance from the context object
@@ -170,48 +124,50 @@ This sample module contains one small method - save_read_group.
         #if len(invalid_msgs) == 0:
         #    self.log(console,"Saving ReadsSet")
 
-        save_reads_set_v1(savereadssetparams)
-
+        set_api = SetAPI(os.environ["SDK_CALLBACK_URL"])
+        set_api._service_ver = "dev"
+        set_api.save_reads_set_v1(savereadssetparams)
 
         # build output report object
         #
         #self.log(console,"BUILDING REPORT")  # DEBUG
-        #if len(invalid_msgs) == 0:
-        #    self.log(console,"reads in output set "+params['output_readset_name']+": "+str(len(elements.keys())))
-        #    report += 'reads in output set '+params['output_readset_name']+': '+str(len(elements.keys()))+"\n"
-        #    reportObj = {
-        #        'objects_created':[{'ref':params['workspace_name']+'/'+params['output_readset_name'], 'description':'save_read_group'}],
-        #        'text_message':report
-        #        }
-        #else:
-        #    report += "FAILURE:\n\n"+"\n".join(invalid_msgs)+"\n"
-        #    reportObj = {
-        #        'objects_created':[],
-        #        'text_message':report
-        #        }
-        #reportName = 'save_read_group_report_'+str(hex(uuid.getnode()))
-        #ws = workspaceService(self.workspaceURL, token=ctx['token'])
-        #report_obj_info = ws.save_objects({
-#                'id':info[6],
-        #        'workspace':params['workspace_name'],
-        #        'objects':[
-        #            {
-        #                'type':'KBaseReport.Report',
-        #                'data':reportObj,
-        #                'name':reportName,
-        #                'meta':{},
-        #                'hidden':1,
-        #                'provenance':provenance
-        #            }
-        #        ]
-        #    })[0]
+        if len(invalid_msgs) == 0:
+            #self.log(console,"reads in output set "+params['output_readset_name']+": "+str(len(elements.keys())))
+            report += 'reads in output set '+params['output_readset_name']+': '+str(len(elements.keys()))+"\n"
+            reportObj = {
+                'objects_created':[{'ref':params['workspace_name']+'/'+params['output_readset_name'], 'description':'save_read_group'}],
+                'text_message':report
+                }
+        else:
+            report += "FAILURE:\n\n"+"\n".join(invalid_msgs)+"\n"
+            reportObj = {
+                'objects_created':[],
+                'text_message':report
+                }
+        reportName = 'save_read_group_report_' + str(hex(uuid.getnode()))
+        ws = workspaceService(self.workspaceURL, token=ctx['token'])
+        report_obj_info = ws.save_objects({
+                'workspace': params['workspace_name'],
+                'objects':[
+                    {
+                        'type':'KBaseReport.Report',
+                        'data': reportObj,
+                        'name': reportName,
+                        'meta': {},
+                        'hidden': 1,
+                        'provenance': provenance
+                    }
+                ]
+            })[0]
 
 
         # Build report and return
         #
         #self.log(console,"BUILDING RETURN OBJECT")
         returnVal = { 'report_name': reportName,
-                      'report_ref': str(report_obj_info[6]) + '/' + str(report_obj_info[0]) + '/' + str(report_obj_info[4]),
+                      'report_ref': str(report_obj_info[6]) +
+                                    '/' + str(report_obj_info[0]) +
+                                    '/' + str(report_obj_info[4]),
                       }
         #self.log(console,"save_read_group DONE") 
 

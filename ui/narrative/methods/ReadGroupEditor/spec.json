@@ -40,10 +40,10 @@
             "default_values": [ "" ],
             "field_type": "text",
             "text_options": {
-                "valid_ws_types": [ "KBaseAssembly.SingleEndLibrary" ]
+                "valid_ws_types": [ "KBaseFile.SingleEndLibrary" ]
             }
         },
-	{
+	    {
 
             "id": "input_reads_list2",
             "optional": true,
@@ -52,7 +52,7 @@
             "default_values": [ "" ],
             "field_type": "text",
             "text_options": {
-                "valid_ws_types": [ "KBaseAssembly.PairedEndLibrary" ]
+                "valid_ws_types": [ "KBaseFile.PairedEndLibrary" ]
             }
         }
     ],
@@ -76,7 +76,7 @@
                 },
                 {
                     "input_parameter": "input_reads_list",
-                    "target_property": "rnput_reads_list"
+                    "target_property": "input_reads_list"
                 }
             ],
             "output_mapping": [

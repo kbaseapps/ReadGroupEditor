@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 import unittest
-import os
-import json
 import time
 import requests
 
@@ -73,31 +71,11 @@ class ReadGroupEditorTest(unittest.TestCase):
 
     # NOTE: According to Python unittest naming rules test method names should start from 'test'.
     def test_filter_contigs_ok(self):
-
         savereadssetparams = {}
-        savereadssetparams['workspace_name'] = '11641'#
+        savereadssetparams['workspace_name'] = 'marcin:1475008857456'
         savereadssetparams['output_readset_name'] = "testReadSet"
-        savereadssetparams['input_reads_list'] = ['Ath_hy5_rep1.fastq', 'Ath_WT_rep1.fastq']
+        savereadssetparams['input_reads_list'] = ['test_SRR400615_1000', 'test_SRR400616_1000']
         savereadssetparams['desc'] = "first read set"
-
-        #savereadssetparams = {}
-        #savereadssetparams['workspace_name'] = '11641'#params['workspace_name']
-        #savereadssetparams['output_object_name'] = "testReadSet"#params['output_readset_name']
-        #readsetdata = {}
-        #readsetdata['description'] = "first read set"
-        #readsetdata['items'] = []
-
-        ##readssetitem = {}
-        #readssetitem['ref'] = savereadssetparams['workspace_name']+'/'+'Ath_hy5_rep1.fastq'
-        #readssetitem['label'] = ''
-        #readsetdata['items'].append(readssetitem)
-
-        ##readssetitem = {}
-        #readssetitem['ref'] = savereadssetparams['workspace_name']+'/'+'Ath_WT_rep1.fastq'
-        #readssetitem['label'] = ''
-        #readsetdata['items'].append(readssetitem)
-
-        #savereadssetparams['data'] = readsetdata
 
         result = self.getImpl().save_read_group(self.getContext(),savereadssetparams)
         print('RESULT:')
