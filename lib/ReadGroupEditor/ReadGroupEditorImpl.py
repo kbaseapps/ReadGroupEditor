@@ -30,8 +30,8 @@ This sample module contains one small method - save_read_group.
     # the latter method is running.
     #########################################
     VERSION = "0.0.1"
-    GIT_URL = "https://github.com/mlhenderson/ReadGroupEditor"
-    GIT_COMMIT_HASH = "14be193ab64756d41917e9a424ce39456ae6e148"
+    GIT_URL = "https://github.com/kbaseapps/ReadGroupEditor"
+    GIT_COMMIT_HASH = "5272cbffef0e32174881aff731963c69c565f6f8"
     
     #BEGIN_CLASS_HEADER
     # Class variables and functions can be defined in this block
@@ -45,6 +45,7 @@ This sample module contains one small method - save_read_group.
         self.workspaceURL = config['workspace-url']
         #END_CONSTRUCTOR
         pass
+    
 
     def save_read_group(self, ctx, params):
         """
