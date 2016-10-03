@@ -7,13 +7,19 @@ MAINTAINER KBase Developer
 
 # RUN apt-get update
 
+RUN mkdir -p /kb/module/work && mkdir -p /kb/module/lib
+RUN chmod 777 /kb/module
+WORKDIR /kb/module
+
+# Genbank uploader uses the data_api, so install that to our lib directory
+RUN git clone https://github.com/kbaseapps/SetAPI && \
+    cd SetAPI && \
+    git checkout ed7c907 && \
+    cd /kb/module && \
+    cp -vr SetAPI/lib/SetAPI lib/
 # -----------------------------------------
 
 COPY ./ /kb/module
-RUN mkdir -p /kb/module/work
-RUN chmod 777 /kb/module
-
-WORKDIR /kb/module
 
 RUN make all
 
