@@ -1,9 +1,9 @@
 #
 # define display information
 #
-name: Reads Group Editor
+name: Reads Set Editor
 tooltip: |
-    Allows to create and edit a group of sequence reads objects
+    Allows to create and edit a set of sequence reads objects
 screenshots: []
 
 icon: icon.png
@@ -29,14 +29,14 @@ suggestions:
 parameters :
     output_readset_name :
         ui-name : |
-            Reads Group Name
+            Reads Set Name
         short-hint : |
-            The name of the group of sequence reads (will be overwritten)
+            The name of the set of sequence reads (will be overwritten)
     desc :
         ui-name : |
-            Reads Group Description
+            Reads Set Description
         short-hint : |
-            Description for this group of sequence reads
+            Description for this set of sequence reads
     input_reads_list:
         ui-name : |
             Single-end or Paired-end reads object

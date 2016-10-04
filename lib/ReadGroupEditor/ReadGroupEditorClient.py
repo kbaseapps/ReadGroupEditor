@@ -33,18 +33,18 @@ class ReadGroupEditor(object):
             trust_all_ssl_certificates=trust_all_ssl_certificates,
             auth_svc=auth_svc)
 
-    def save_read_group(self, params, context=None):
+    def save_read_set(self, params, context=None):
         """
-        :param params: instance of type "save_read_group_params"
-           (save_read_group() ** **  Method for adding Reads objects to a
-           ReadsSet) -> structure: parameter "workspace_name" of String,
-           parameter "output_readset_name" of String, parameter
-           "input_reads_list" of list of String, parameter "desc" of String
-        :returns: instance of type "save_read_group_output" -> structure:
+        :param params: instance of type "save_read_set_params" (** **  Method
+           for adding Reads objects to a ReadsSet) -> structure: parameter
+           "workspace_name" of String, parameter "output_readset_name" of
+           String, parameter "input_reads_list" of list of String, parameter
+           "desc" of String
+        :returns: instance of type "save_read_set_output" -> structure:
            parameter "report_name" of String, parameter "report_ref" of String
         """
         return self._client.call_method(
-            'ReadGroupEditor.save_read_group',
+            'ReadGroupEditor.save_read_set',
             [params], self._service_ver, context)
 
     def status(self, context=None):

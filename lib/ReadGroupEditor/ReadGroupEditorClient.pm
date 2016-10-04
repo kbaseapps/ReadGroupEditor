@@ -110,9 +110,9 @@ sub new
 
 
 
-=head2 save_read_group
+=head2 save_read_set
 
-  $return = $obj->save_read_group($params)
+  $return = $obj->save_read_set($params)
 
 =over 4
 
@@ -121,14 +121,14 @@ sub new
 =begin html
 
 <pre>
-$params is a ReadGroupEditor.save_read_group_params
-$return is a ReadGroupEditor.save_read_group_output
-save_read_group_params is a reference to a hash where the following keys are defined:
+$params is a ReadGroupEditor.save_read_set_params
+$return is a ReadGroupEditor.save_read_set_output
+save_read_set_params is a reference to a hash where the following keys are defined:
 	workspace_name has a value which is a string
 	output_readset_name has a value which is a string
 	input_reads_list has a value which is a reference to a list where each element is a string
 	desc has a value which is a string
-save_read_group_output is a reference to a hash where the following keys are defined:
+save_read_set_output is a reference to a hash where the following keys are defined:
 	report_name has a value which is a string
 	report_ref has a value which is a string
 
@@ -138,14 +138,14 @@ save_read_group_output is a reference to a hash where the following keys are def
 
 =begin text
 
-$params is a ReadGroupEditor.save_read_group_params
-$return is a ReadGroupEditor.save_read_group_output
-save_read_group_params is a reference to a hash where the following keys are defined:
+$params is a ReadGroupEditor.save_read_set_params
+$return is a ReadGroupEditor.save_read_set_output
+save_read_set_params is a reference to a hash where the following keys are defined:
 	workspace_name has a value which is a string
 	output_readset_name has a value which is a string
 	input_reads_list has a value which is a reference to a list where each element is a string
 	desc has a value which is a string
-save_read_group_output is a reference to a hash where the following keys are defined:
+save_read_set_output is a reference to a hash where the following keys are defined:
 	report_name has a value which is a string
 	report_ref has a value which is a string
 
@@ -160,7 +160,7 @@ save_read_group_output is a reference to a hash where the following keys are def
 
 =cut
 
- sub save_read_group
+ sub save_read_set
 {
     my($self, @args) = @_;
 
@@ -169,7 +169,7 @@ save_read_group_output is a reference to a hash where the following keys are def
     if ((my $n = @args) != 1)
     {
 	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
-							       "Invalid argument count for function save_read_group (received $n, expecting 1)");
+							       "Invalid argument count for function save_read_set (received $n, expecting 1)");
     }
     {
 	my($params) = @args;
@@ -177,31 +177,31 @@ save_read_group_output is a reference to a hash where the following keys are def
 	my @_bad_arguments;
         (ref($params) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 1 \"params\" (value was \"$params\")");
         if (@_bad_arguments) {
-	    my $msg = "Invalid arguments passed to save_read_group:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	    my $msg = "Invalid arguments passed to save_read_set:\n" . join("", map { "\t$_\n" } @_bad_arguments);
 	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-								   method_name => 'save_read_group');
+								   method_name => 'save_read_set');
 	}
     }
 
     my $url = $self->{url};
     my $result = $self->{client}->call($url, $self->{headers}, {
-	    method => "ReadGroupEditor.save_read_group",
+	    method => "ReadGroupEditor.save_read_set",
 	    params => \@args,
     });
     if ($result) {
 	if ($result->is_error) {
 	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
 					       code => $result->content->{error}->{code},
-					       method_name => 'save_read_group',
+					       method_name => 'save_read_set',
 					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
 					      );
 	} else {
 	    return wantarray ? @{$result->result} : $result->result->[0];
 	}
     } else {
-        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method save_read_group",
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method save_read_set",
 					    status_line => $self->{client}->status_line,
-					    method_name => 'save_read_group',
+					    method_name => 'save_read_set',
 				       );
     }
 }
@@ -249,16 +249,16 @@ sub version {
             Bio::KBase::Exceptions::JSONRPC->throw(
                 error => $result->error_message,
                 code => $result->content->{code},
-                method_name => 'save_read_group',
+                method_name => 'save_read_set',
             );
         } else {
             return wantarray ? @{$result->result} : $result->result->[0];
         }
     } else {
         Bio::KBase::Exceptions::HTTP->throw(
-            error => "Error invoking method save_read_group",
+            error => "Error invoking method save_read_set",
             status_line => $self->{client}->status_line,
-            method_name => 'save_read_group',
+            method_name => 'save_read_set',
         );
     }
 }
@@ -347,7 +347,7 @@ a string
 
 
 
-=head2 save_read_group_params
+=head2 save_read_set_params
 
 =over 4
 
@@ -355,7 +355,6 @@ a string
 
 =item Description
 
-save_read_group()
 **
 **  Method for adding Reads objects to a ReadsSet
 
@@ -390,7 +389,7 @@ desc has a value which is a string
 
 
 
-=head2 save_read_group_output
+=head2 save_read_set_output
 
 =over 4
 

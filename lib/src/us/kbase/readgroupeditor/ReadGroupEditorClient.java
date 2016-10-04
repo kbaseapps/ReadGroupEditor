@@ -164,19 +164,19 @@ public class ReadGroupEditorClient {
     }
 
     /**
-     * <p>Original spec-file function name: save_read_group</p>
+     * <p>Original spec-file function name: save_read_set</p>
      * <pre>
      * </pre>
-     * @param   params   instance of type {@link us.kbase.readgroupeditor.SaveReadGroupParams SaveReadGroupParams} (original type "save_read_group_params")
-     * @return   instance of type {@link us.kbase.readgroupeditor.SaveReadGroupOutput SaveReadGroupOutput} (original type "save_read_group_output")
+     * @param   params   instance of type {@link us.kbase.readgroupeditor.SaveReadSetParams SaveReadSetParams} (original type "save_read_set_params")
+     * @return   instance of type {@link us.kbase.readgroupeditor.SaveReadSetOutput SaveReadSetOutput} (original type "save_read_set_output")
      * @throws IOException if an IO exception occurs
      * @throws JsonClientException if a JSON RPC exception occurs
      */
-    public SaveReadGroupOutput saveReadGroup(SaveReadGroupParams params, RpcContext... jsonRpcContext) throws IOException, JsonClientException {
+    public SaveReadSetOutput saveReadSet(SaveReadSetParams params, RpcContext... jsonRpcContext) throws IOException, JsonClientException {
         List<Object> args = new ArrayList<Object>();
         args.add(params);
-        TypeReference<List<SaveReadGroupOutput>> retType = new TypeReference<List<SaveReadGroupOutput>>() {};
-        List<SaveReadGroupOutput> res = caller.jsonrpcCall("ReadGroupEditor.save_read_group", args, retType, true, true, jsonRpcContext, this.serviceVersion);
+        TypeReference<List<SaveReadSetOutput>> retType = new TypeReference<List<SaveReadSetOutput>>() {};
+        List<SaveReadSetOutput> res = caller.jsonrpcCall("ReadGroupEditor.save_read_set", args, retType, true, true, jsonRpcContext, this.serviceVersion);
         return res.get(0);
     }
 

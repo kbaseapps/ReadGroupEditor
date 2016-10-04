@@ -8,7 +8,7 @@ module ReadGroupEditor {
     typedef string workspace_name;
     typedef string output_readset_name;
 
-     /* save_read_group()
+    /*
     **
     **  Method for adding Reads objects to a ReadsSet
     */
@@ -17,13 +17,13 @@ module ReadGroupEditor {
         string  output_readset_name;
         list <string> input_reads_list;
         string desc;
-    } save_read_group_params;
+    } save_read_set_params;
 
     typedef structure {
         string report_name;
         string  report_ref;
-    } save_read_group_output;
+    } save_read_set_output;
 
-    funcdef save_read_group (save_read_group_params params)  returns (save_read_group_output) authentication required;
+    funcdef save_read_set (save_read_set_params params)  returns (save_read_set_output) authentication required;
 
 };
