@@ -39,13 +39,8 @@ parameters :
             Description for this group of sequence reads
     input_reads_list:
         ui-name : |
-            Single-end reads object
+            Single-end or Paired-end reads object
         short-hint : |
-            More than one single end reads object
-    input_reads_list2 :
-        ui-name : |
-            Paired-end reads object
-        short-hint : |
-            More than one paired end reads object
+            More than one reads object
 description : |
     <p>This is a method to create and edit a group of sequence read objects.</p>
