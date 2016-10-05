@@ -31,7 +31,7 @@ This sample module contains one small method - save_read_group.
     #########################################
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/kbaseapps/ReadGroupEditor"
-    GIT_COMMIT_HASH = "a5cfea7f7c58e704094f1f57cdf306d518754c5e"
+    GIT_COMMIT_HASH = "3ee6ea571a149991d2f47f942f0bc724eeede3f1"
     
     #BEGIN_CLASS_HEADER
     # Class variables and functions can be defined in this block
