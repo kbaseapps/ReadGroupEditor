@@ -31,7 +31,7 @@ This sample module contains one small method - save_read_group.
     #########################################
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/kbaseapps/ReadGroupEditor"
-    GIT_COMMIT_HASH = "12d38b7b32b6fbb78e455126ea741f055b8da940"
+    GIT_COMMIT_HASH = "38ee9df5c292752b90448a48e741766a2ea5668f"
     
     #BEGIN_CLASS_HEADER
     # Class variables and functions can be defined in this block
@@ -80,8 +80,8 @@ This sample module contains one small method - save_read_group.
             raise ValueError('input_reads_list parameter is required')
         #if 'input_readsset_name' not in params:
         #    raise ValueError('input_readsset_name parameter is optional')
-        if 'output_readsgroup_name' not in params:
-            raise ValueError('output_readsgroup_name parameter is required')
+        if 'output_readgroup_name' not in params:
+            raise ValueError('output_readgroup_name parameter is required')
 
 
         # Build ReadSet
@@ -90,7 +90,7 @@ This sample module contains one small method - save_read_group.
 
         savereadssetparams = {}
         savereadssetparams['workspace_name'] = params['workspace_name']
-        savereadssetparams['output_object_name'] = params['output_readset_name']
+        savereadssetparams['output_object_name'] = params['output_readgroup_name']
         readsetdata = {}
         if(params['desc'] is not None):
             readsetdata['description'] = params['desc']
