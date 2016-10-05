@@ -73,7 +73,7 @@ class ReadGroupEditorTest(unittest.TestCase):
     def test_save_read_group_ok(self):
         savereadssetparams = {}
         savereadssetparams['workspace_name'] = 'marcin:1475008857456'
-        savereadssetparams['output_readset_name'] = "testReadSet"
+        savereadssetparams['output_readgroup_name'] = "testReadSet"
         savereadssetparams['input_reads_list'] = ['test_SRR400615_1000', 'test_SRR400616_1000']
         savereadssetparams['desc'] = "first read set"
         

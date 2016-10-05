@@ -31,7 +31,7 @@ This sample module contains one small method - save_read_group.
     #########################################
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/kbaseapps/ReadGroupEditor"
-    GIT_COMMIT_HASH = "7127744447e307a732e2d70d134f1e63e358c139"
+    GIT_COMMIT_HASH = "12d38b7b32b6fbb78e455126ea741f055b8da940"
     
     #BEGIN_CLASS_HEADER
     # Class variables and functions can be defined in this block
@@ -80,8 +80,8 @@ This sample module contains one small method - save_read_group.
             raise ValueError('input_reads_list parameter is required')
         #if 'input_readsset_name' not in params:
         #    raise ValueError('input_readsset_name parameter is optional')
-        if 'output_readset_name' not in params:
-            raise ValueError('output_readset_name parameter is required')
+        if 'output_readsgroup_name' not in params:
+            raise ValueError('output_readsgroup_name parameter is required')
 
 
         # Build ReadSet
@@ -138,9 +138,9 @@ This sample module contains one small method - save_read_group.
         #self.log(console,"BUILDING REPORT")  # DEBUG
         if len(invalid_msgs) == 0:
             #self.log(console,"reads in output group "+params['output_readset_name']+": "+str(len(elements.keys())))
-            report += 'reads in output set '+params['output_readset_name']+': '+str(len(elements.keys()))+"\n"
+            report += 'reads in output set '+params['output_readgroup_name']+': '+str(len(elements.keys()))+"\n"
             reportObj = {
-                'objects_created':[{'ref':params['workspace_name']+'/'+params['output_readset_name'], 'description':'save_read_group'}],
+                'objects_created':[{'ref':params['workspace_name']+'/'+params['output_readgroup_name'], 'description':'save_read_group'}],
                 'text_message':report
                 }
         else:
