@@ -70,13 +70,15 @@ class ReadGroupEditorTest(unittest.TestCase):
         return self.__class__.ctx
 
     # NOTE: According to Python unittest naming rules test method names should start from 'test'.
-    def test_filter_contigs_ok(self):
+    def test_save_read_group_ok(self):
         savereadssetparams = {}
         savereadssetparams['workspace_name'] = 'marcin:1475008857456'
         savereadssetparams['output_readset_name'] = "testReadSet"
         savereadssetparams['input_reads_list'] = ['test_SRR400615_1000', 'test_SRR400616_1000']
         savereadssetparams['desc'] = "first read set"
-
+        
+        #setAPI_Client = SetAPI (url=self.serviceWizardURL, token=ctx['token']) 
+        #results = setAPI_Client.save_read_group(self.getContext(),savereadssetparams)
         result = self.getImpl().save_read_group(self.getContext(),savereadssetparams)
         print('RESULT:')
         pprint(result)

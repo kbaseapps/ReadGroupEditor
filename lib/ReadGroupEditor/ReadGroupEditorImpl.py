@@ -31,7 +31,7 @@ This sample module contains one small method - save_read_group.
     #########################################
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/kbaseapps/ReadGroupEditor"
-    GIT_COMMIT_HASH = "3ee6ea571a149991d2f47f942f0bc724eeede3f1"
+    GIT_COMMIT_HASH = "11a1011b4949ced4b5e911f0802fd9069d476a33"
     
     #BEGIN_CLASS_HEADER
     # Class variables and functions can be defined in this block
@@ -43,6 +43,7 @@ This sample module contains one small method - save_read_group.
     def __init__(self, config):
         #BEGIN_CONSTRUCTOR
         self.workspaceURL = config['workspace-url']
+        self.servicewizardURL = config['service-wizard-url']
         #END_CONSTRUCTOR
         pass
     
@@ -128,8 +129,8 @@ This sample module contains one small method - save_read_group.
         #if len(invalid_msgs) == 0:
         #    self.log(console,"Saving ReadsSet")
 
-        set_api = SetAPI(os.environ["SDK_CALLBACK_URL"])
-        set_api._service_ver = "dev"
+        set_api = SetAPI(url=self.servicewizardURL,token= ctx['token'])
+        #set_api._service_ver = "dev"
         set_api.save_reads_set_v1(savereadssetparams)
 
         # build output report object

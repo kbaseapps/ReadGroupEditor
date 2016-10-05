@@ -27,7 +27,7 @@ suggestions:
 # Configure the display and description of parameters
 #
 parameters :
-    output_readset_name :
+    output_readgroup_name :
         ui-name : |
             Reads Set Name
         short-hint : |
