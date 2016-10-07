@@ -1,5 +1,5 @@
 module-name:
-    ReadGroupEditor
+    ReadSetEditor
 
 module-description:
     A KBase module

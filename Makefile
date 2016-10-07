@@ -1,7 +1,7 @@
-SERVICE = readgroupeditor
-SERVICE_CAPS = ReadGroupEditor
-SPEC_FILE = ReadGroupEditor.spec
-URL = https://kbase.us/services/readgroupeditor
+SERVICE = readseteditor
+SERVICE_CAPS = ReadSetEditor
+SPEC_FILE = ReadSetEditor.spec
+URL = https://kbase.us/services/readseteditor
 DIR = $(shell pwd)
 LIB_DIR = lib
 SCRIPTS_DIR = scripts

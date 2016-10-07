@@ -12,11 +12,11 @@ except:
 from pprint import pprint
 
 from biokbase.workspace.client import Workspace as workspaceService
-from ReadGroupEditor.ReadGroupEditorImpl import ReadGroupEditor
-from ReadGroupEditor.ReadGroupEditorServer import MethodContext
+from ReadSetEditor.ReadSetEditorImpl import ReadSetEditor
+from ReadSetEditor.ReadSetEditorServer import MethodContext
 
 
-class ReadGroupEditorTest(unittest.TestCase):
+class ReadSetEditorTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -30,7 +30,7 @@ class ReadGroupEditorTest(unittest.TestCase):
         cls.ctx.update({'token': token,
                         'user_id': user_id,
                         'provenance': [
-                            {'service': 'ReadGroupEditor',
+                            {'service': 'ReadSetEditor',
                              'method': 'please_never_use_it_in_production',
                              'method_params': []
                              }],
@@ -39,11 +39,11 @@ class ReadGroupEditorTest(unittest.TestCase):
         cls.cfg = {}
         config = ConfigParser()
         config.read(config_file)
-        for nameval in config.items('ReadGroupEditor'):
+        for nameval in config.items('ReadSetEditor'):
             cls.cfg[nameval[0]] = nameval[1]
         cls.wsURL = cls.cfg['workspace-url']
         cls.wsClient = workspaceService(cls.wsURL, token=token)
-        cls.serviceImpl = ReadGroupEditor(cls.cfg)
+        cls.serviceImpl = ReadSetEditor(cls.cfg)
 
     @classmethod
     def tearDownClass(cls):
@@ -58,7 +58,7 @@ class ReadGroupEditorTest(unittest.TestCase):
         if hasattr(self.__class__, 'wsName'):
             return self.__class__.wsName
         suffix = int(time.time() * 1000)
-        wsName = "test_ReadGroupEditor_" + str(suffix)
+        wsName = "test_ReadSetEditor_" + str(suffix)
         ret = self.getWsClient().create_workspace({'workspace': wsName})
         self.__class__.wsName = wsName
         return wsName
@@ -70,15 +70,15 @@ class ReadGroupEditorTest(unittest.TestCase):
         return self.__class__.ctx
 
     # NOTE: According to Python unittest naming rules test method names should start from 'test'.
-    def test_save_read_group_ok(self):
+    def test_save_read_set_ok(self):
         savereadssetparams = {}
         savereadssetparams['workspace_name'] = 'marcin:1475008857456'
-        savereadssetparams['output_readgroup_name'] = "testReadSet"
+        savereadssetparams['output_readset_name'] = "testReadSet"
         savereadssetparams['input_reads_list'] = ['test_SRR400615_1000', 'test_SRR400616_1000']
         savereadssetparams['desc'] = "first read set"
         
         #setAPI_Client = SetAPI (url=self.serviceWizardURL, token=ctx['token']) 
-        #results = setAPI_Client.save_read_group(self.getContext(),savereadssetparams)
-        result = self.getImpl().save_read_group(self.getContext(),savereadssetparams)
+        #results = setAPI_Client.save_read_set(self.getContext(),savereadssetparams)
+        result = self.getImpl().save_read_set(self.getContext(),savereadssetparams)
         print('RESULT:')
         pprint(result)

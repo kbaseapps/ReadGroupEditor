@@ -13,14 +13,14 @@ from SetAPI.SetAPIClient import SetAPI
 #END_HEADER
 
 
-class ReadGroupEditor:
+class ReadSetEditor:
     '''
     Module Name:
-    ReadGroupEditor
+    ReadSetEditor
 
     Module Description:
-    A KBase module: ReadGroupEditor
-This sample module contains one small method - save_read_group.
+    A KBase module: ReadSetEditor
+This sample module contains one small method - save_read_set.
     '''
 
     ######## WARNING FOR GEVENT USERS #######
@@ -30,8 +30,8 @@ This sample module contains one small method - save_read_group.
     # the latter method is running.
     #########################################
     VERSION = "0.0.1"
-    GIT_URL = "https://github.com/kbaseapps/ReadGroupEditor"
-    GIT_COMMIT_HASH = "38ee9df5c292752b90448a48e741766a2ea5668f"
+    GIT_URL = "https://github.com/kbaseapps/ReadsetEditor"
+    GIT_COMMIT_HASH = "4bf52418380a98387f51b4c9084875ce242baf2d"
     
     #BEGIN_CLASS_HEADER
     # Class variables and functions can be defined in this block
@@ -48,23 +48,23 @@ This sample module contains one small method - save_read_group.
         pass
     
 
-    def save_read_group(self, ctx, params):
+    def save_read_set(self, ctx, params):
         """
-        :param params: instance of type "save_read_group_params" (** ** 
-           Method for adding Reads objects to a Reads Group) -> structure:
-           parameter "workspace_name" of String, parameter
-           "output_readgroup_name" of String, parameter "input_reads_list" of
-           list of String, parameter "desc" of String
-        :returns: instance of type "save_read_group_output" -> structure:
+        :param params: instance of type "save_read_set_params" (** **  Method
+           for adding Reads objects to a Reads Set) -> structure: parameter
+           "workspace_name" of String, parameter "output_readset_name" of
+           String, parameter "input_reads_list" of list of String, parameter
+           "desc" of String
+        :returns: instance of type "save_read_set_output" -> structure:
            parameter "report_name" of String, parameter "report_ref" of String
         """
         # ctx is the context object
         # return variables are: returnVal
-        #BEGIN save_read_group
+        #BEGIN save_read_set
 
         console = []
         invalid_msgs = []
-        #self.log(console,'Running save_read_group with params=')
+        #self.log(console,'Running save_read_set with params=')
         #self.log(console, "\n"+pformat(params))
         report = ''
 #        report = 'Running KButil_Add_Genomes_to_GenomeSet with params='
@@ -80,8 +80,8 @@ This sample module contains one small method - save_read_group.
             raise ValueError('input_reads_list parameter is required')
         #if 'input_readsset_name' not in params:
         #    raise ValueError('input_readsset_name parameter is optional')
-        if 'output_readgroup_name' not in params:
-            raise ValueError('output_readgroup_name parameter is required')
+        if 'output_readset_name' not in params:
+            raise ValueError('output_readset_name parameter is required')
 
 
         # Build ReadSet
@@ -90,7 +90,7 @@ This sample module contains one small method - save_read_group.
 
         savereadssetparams = {}
         savereadssetparams['workspace_name'] = params['workspace_name']
-        savereadssetparams['output_object_name'] = params['output_readgroup_name']
+        savereadssetparams['output_object_name'] = params['output_readset_name']
         readsetdata = {}
         if(params['desc'] is not None):
             readsetdata['description'] = params['desc']
@@ -120,8 +120,8 @@ This sample module contains one small method - save_read_group.
             provenance[0]['input_ws_objects'] = []
         for reads_name in params['input_reads_list']:
             provenance[0]['input_ws_objects'].append(params['workspace_name']+'/'+reads_name)
-        provenance[0]['service'] = 'ReadGroupEditor'
-        provenance[0]['method'] = 'save_read_group'
+        provenance[0]['service'] = 'ReadsetEditor'
+        provenance[0]['method'] = 'save_read_set'
 
 
         # Save output object
@@ -137,10 +137,10 @@ This sample module contains one small method - save_read_group.
         #
         #self.log(console,"BUILDING REPORT")  # DEBUG
         if len(invalid_msgs) == 0:
-            #self.log(console,"reads in output group "+params['output_readset_name']+": "+str(len(elements.keys())))
-            report += 'reads in output set '+params['output_readgroup_name']+': '+str(len(elements.keys()))+"\n"
+            #self.log(console,"reads in output set "+params['output_readset_name']+": "+str(len(elements.keys())))
+            report += 'reads in output set '+params['output_readset_name']+': '+str(len(elements.keys()))+"\n"
             reportObj = {
-                'objects_created':[{'ref':params['workspace_name']+'/'+params['output_readgroup_name'], 'description':'save_read_group'}],
+                'objects_created':[{'ref':params['workspace_name']+'/'+params['output_readset_name'], 'description':'save_read_set'}],
                 'text_message':report
                 }
         else:
@@ -149,7 +149,7 @@ This sample module contains one small method - save_read_group.
                 'objects_created':[],
                 'text_message':report
                 }
-        reportName = 'save_read_group_report_' + str(hex(uuid.getnode()))
+        reportName = 'save_read_set_report_' + str(hex(uuid.getnode()))
         ws = workspaceService(self.workspaceURL, token=ctx['token'])
         report_obj_info = ws.save_objects({
                 'workspace': params['workspace_name'],
@@ -174,13 +174,13 @@ This sample module contains one small method - save_read_group.
                                     '/' + str(report_obj_info[0]) +
                                     '/' + str(report_obj_info[4]),
                       }
-        #self.log(console,"save_read_group DONE") 
+        #self.log(console,"save_read_set DONE") 
 
-        #END save_read_group
+        #END save_read_set
 
         # At some point might do deeper type checking...
         if not isinstance(returnVal, dict):
-            raise ValueError('Method save_read_group return value ' +
+            raise ValueError('Method save_read_set return value ' +
                              'returnVal is not type dict as required.')
         # return the results
         return [returnVal]
