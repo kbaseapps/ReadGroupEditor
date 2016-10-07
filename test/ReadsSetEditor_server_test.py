@@ -12,11 +12,11 @@ except:
 from pprint import pprint
 
 from biokbase.workspace.client import Workspace as workspaceService
-from ReadSetEditor.ReadSetEditorImpl import ReadSetEditor
-from ReadSetEditor.ReadSetEditorServer import MethodContext
+from ReadsSetEditor.ReadsSetEditorImpl import ReadsSetEditor
+from ReadsSetEditor.ReadsSetEditorServer import MethodContext
 
 
-class ReadSetEditorTest(unittest.TestCase):
+class ReadsSetEditorTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -30,7 +30,7 @@ class ReadSetEditorTest(unittest.TestCase):
         cls.ctx.update({'token': token,
                         'user_id': user_id,
                         'provenance': [
-                            {'service': 'ReadSetEditor',
+                            {'service': 'ReadsSetEditor',
                              'method': 'please_never_use_it_in_production',
                              'method_params': []
                              }],
@@ -39,11 +39,11 @@ class ReadSetEditorTest(unittest.TestCase):
         cls.cfg = {}
         config = ConfigParser()
         config.read(config_file)
-        for nameval in config.items('ReadSetEditor'):
+        for nameval in config.items('ReadsSetEditor'):
             cls.cfg[nameval[0]] = nameval[1]
         cls.wsURL = cls.cfg['workspace-url']
         cls.wsClient = workspaceService(cls.wsURL, token=token)
-        cls.serviceImpl = ReadSetEditor(cls.cfg)
+        cls.serviceImpl = ReadsSetEditor(cls.cfg)
 
     @classmethod
     def tearDownClass(cls):
@@ -58,7 +58,7 @@ class ReadSetEditorTest(unittest.TestCase):
         if hasattr(self.__class__, 'wsName'):
             return self.__class__.wsName
         suffix = int(time.time() * 1000)
-        wsName = "test_ReadSetEditor_" + str(suffix)
+        wsName = "test_ReadsSetEditor_" + str(suffix)
         ret = self.getWsClient().create_workspace({'workspace': wsName})
         self.__class__.wsName = wsName
         return wsName
@@ -73,7 +73,7 @@ class ReadSetEditorTest(unittest.TestCase):
     def test_save_read_set_ok(self):
         savereadssetparams = {}
         savereadssetparams['workspace_name'] = 'marcin:1475008857456'
-        savereadssetparams['output_readset_name'] = "testReadSet"
+        savereadssetparams['output_readset_name'] = "testReadsSet"
         savereadssetparams['input_reads_list'] = ['test_SRR400615_1000', 'test_SRR400616_1000']
         savereadssetparams['desc'] = "first read set"
         

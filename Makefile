@@ -1,6 +1,6 @@
 SERVICE = readseteditor
-SERVICE_CAPS = ReadSetEditor
-SPEC_FILE = ReadSetEditor.spec
+SERVICE_CAPS = ReadsSetEditor
+SPEC_FILE = ReadsSetEditor.spec
 URL = https://kbase.us/services/readseteditor
 DIR = $(shell pwd)
 LIB_DIR = lib

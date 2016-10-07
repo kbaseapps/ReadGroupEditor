@@ -30,8 +30,8 @@ This sample module contains one small method - save_read_set.
     # the latter method is running.
     #########################################
     VERSION = "0.0.1"
-    GIT_URL = "https://github.com/kbaseapps/ReadsetEditor"
-    GIT_COMMIT_HASH = "4bf52418380a98387f51b4c9084875ce242baf2d"
+    GIT_URL = "https://github.com/kbaseapps/ReadGroupEditor"
+    GIT_COMMIT_HASH = "70611c393291e4ad6220359eac5fe05f273db811"
     
     #BEGIN_CLASS_HEADER
     # Class variables and functions can be defined in this block
@@ -84,7 +84,7 @@ This sample module contains one small method - save_read_set.
             raise ValueError('output_readset_name parameter is required')
 
 
-        # Build ReadSet
+        # Build ReadsSet
         #
         elements = dict()
 
@@ -120,14 +120,14 @@ This sample module contains one small method - save_read_set.
             provenance[0]['input_ws_objects'] = []
         for reads_name in params['input_reads_list']:
             provenance[0]['input_ws_objects'].append(params['workspace_name']+'/'+reads_name)
-        provenance[0]['service'] = 'ReadsetEditor'
+        provenance[0]['service'] = 'ReadssetEditor'
         provenance[0]['method'] = 'save_read_set'
 
 
         # Save output object
         #
         #if len(invalid_msgs) == 0:
-        #    self.log(console,"Saving ReadsSet")
+        #    self.log(console,"Saving ReadssSet")
 
         set_api = SetAPI(url=self.servicewizardURL,token= ctx['token'])
         #set_api._service_ver = "dev"
