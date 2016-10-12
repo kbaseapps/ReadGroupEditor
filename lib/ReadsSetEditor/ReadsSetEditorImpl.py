@@ -13,13 +13,13 @@ from SetAPI.SetAPIClient import SetAPI
 #END_HEADER
 
 
-class ReadSetEditor:
+class ReadsSetEditor:
     '''
     Module Name:
-    ReadSetEditor
+    ReadsSetEditor
 
     Module Description:
-    A KBase module: ReadSetEditor
+    A KBase module: ReadsSetEditor
 This sample module contains one small method - save_read_set.
     '''
 

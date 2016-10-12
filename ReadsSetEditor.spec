@@ -3,7 +3,7 @@ A KBase module: ReadSetEditor
 This sample module contains one small method - save_read_set.
 */
 
-module ReadSetEditor {
+module ReadsSetEditor {
 
     typedef string workspace_name;
     typedef string output_readset_name;
