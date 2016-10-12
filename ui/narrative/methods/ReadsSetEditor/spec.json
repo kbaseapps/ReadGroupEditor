@@ -47,7 +47,7 @@
     "behavior": {
         "service-mapping": {
             "url": "",
-            "name": "ReadSetEditor",
+            "name": "ReadsSetEditor",
             "method": "save_read_set",
             "input_mapping": [
                 {
