@@ -333,10 +333,6 @@ class Application(object):
                              name='ReadsSetEditor.save_read_set',
                              types=[dict])
         self.method_authentication['ReadsSetEditor.save_read_set'] = 'required' # noqa
-        self.rpc_service.add(impl_ReadsSetEditor.save_reads_set_v1,
-                             name='ReadsSetEditor.save_reads_set_v1',
-                             types=[])
-        self.method_authentication['ReadsSetEditor.save_reads_set_v1'] = 'required' # noqa
         self.rpc_service.add(impl_ReadsSetEditor.status,
                              name='ReadsSetEditor.status',
                              types=[dict])

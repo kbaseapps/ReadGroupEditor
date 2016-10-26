@@ -11,7 +11,6 @@ import us.kbase.auth.AuthToken;
 import us.kbase.common.service.JsonClientCaller;
 import us.kbase.common.service.JsonClientException;
 import us.kbase.common.service.RpcContext;
-import us.kbase.common.service.UObject;
 import us.kbase.common.service.UnauthorizedException;
 
 /**
@@ -178,22 +177,6 @@ public class ReadsSetEditorClient {
         args.add(params);
         TypeReference<List<SaveReadSetOutput>> retType = new TypeReference<List<SaveReadSetOutput>>() {};
         List<SaveReadSetOutput> res = caller.jsonrpcCall("ReadsSetEditor.save_read_set", args, retType, true, true, jsonRpcContext, this.serviceVersion);
-        return res.get(0);
-    }
-
-    /**
-     * <p>Original spec-file function name: save_reads_set_v1</p>
-     * <pre>
-     * dummy method ... this is never actually invoked, rather SetAPI/save_reads_set_v1 is
-     * </pre>
-     * @return   parameter "outputs" of unspecified object
-     * @throws IOException if an IO exception occurs
-     * @throws JsonClientException if a JSON RPC exception occurs
-     */
-    public UObject saveReadsSetV1(RpcContext... jsonRpcContext) throws IOException, JsonClientException {
-        List<Object> args = new ArrayList<Object>();
-        TypeReference<List<UObject>> retType = new TypeReference<List<UObject>>() {};
-        List<UObject> res = caller.jsonrpcCall("ReadsSetEditor.save_reads_set_v1", args, retType, true, true, jsonRpcContext, this.serviceVersion);
         return res.get(0);
     }
 

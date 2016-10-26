@@ -31,7 +31,7 @@ This sample module contains one small method - save_read_set.
     ######################################### noqa
     VERSION = "0.1.0"
     GIT_URL = "ssh://git@github.com/eapearson/ReadsSetEditor"
-    GIT_COMMIT_HASH = "5d18a2877069ab5b517e68120d8e5404db40d753"
+    GIT_COMMIT_HASH = "f967194702b7e9fd309944446ba9a2df088e301c"
 
     #BEGIN_CLASS_HEADER
     # Class variables and functions can be defined in this block
@@ -184,6 +184,23 @@ This sample module contains one small method - save_read_set.
                              'returnVal is not type dict as required.')
         # return the results
         return [returnVal]
+
+    def save_reads_set_v1(self, ctx):
+        """
+        dummy method ... this is never actually invoked, rather SetAPI/save_reads_set_v1 is
+        :returns: instance of unspecified object
+        """
+        # ctx is the context object
+        # return variables are: outputs
+        #BEGIN save_reads_set_v1
+        #END save_reads_set_v1
+
+        # At some point might do deeper type checking...
+        if not isinstance(outputs, object):
+            raise ValueError('Method save_reads_set_v1 return value ' +
+                             'outputs is not type object as required.')
+        # return the results
+        return [outputs]
     def status(self, ctx):
         #BEGIN_STATUS
         returnVal = {'state': "OK", 'message': "", 'version': self.VERSION, 

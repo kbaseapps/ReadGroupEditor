@@ -206,75 +206,6 @@ save_read_set_output is a reference to a hash where the following keys are defin
     }
 }
  
-
-
-=head2 save_reads_set_v1
-
-  $outputs = $obj->save_reads_set_v1()
-
-=over 4
-
-=item Parameter and return types
-
-=begin html
-
-<pre>
-$outputs is an UnspecifiedObject, which can hold any non-null object
-
-</pre>
-
-=end html
-
-=begin text
-
-$outputs is an UnspecifiedObject, which can hold any non-null object
-
-
-=end text
-
-=item Description
-
-dummy method ... this is never actually invoked, rather SetAPI/save_reads_set_v1 is
-
-=back
-
-=cut
-
- sub save_reads_set_v1
-{
-    my($self, @args) = @_;
-
-# Authentication: required
-
-    if ((my $n = @args) != 0)
-    {
-	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
-							       "Invalid argument count for function save_reads_set_v1 (received $n, expecting 0)");
-    }
-
-    my $url = $self->{url};
-    my $result = $self->{client}->call($url, $self->{headers}, {
-	    method => "ReadsSetEditor.save_reads_set_v1",
-	    params => \@args,
-    });
-    if ($result) {
-	if ($result->is_error) {
-	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
-					       code => $result->content->{error}->{code},
-					       method_name => 'save_reads_set_v1',
-					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
-					      );
-	} else {
-	    return wantarray ? @{$result->result} : $result->result->[0];
-	}
-    } else {
-        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method save_reads_set_v1",
-					    status_line => $self->{client}->status_line,
-					    method_name => 'save_reads_set_v1',
-				       );
-    }
-}
- 
   
 sub status
 {
@@ -318,16 +249,16 @@ sub version {
             Bio::KBase::Exceptions::JSONRPC->throw(
                 error => $result->error_message,
                 code => $result->content->{code},
-                method_name => 'save_reads_set_v1',
+                method_name => 'save_read_set',
             );
         } else {
             return wantarray ? @{$result->result} : $result->result->[0];
         }
     } else {
         Bio::KBase::Exceptions::HTTP->throw(
-            error => "Error invoking method save_reads_set_v1",
+            error => "Error invoking method save_read_set",
             status_line => $self->{client}->status_line,
-            method_name => 'save_reads_set_v1',
+            method_name => 'save_read_set',
         );
     }
 }
