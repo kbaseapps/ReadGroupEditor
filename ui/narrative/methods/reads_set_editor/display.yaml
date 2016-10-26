@@ -30,5 +30,5 @@ parameters : {}
 
     
 description : |
-    <p>This is a method to create and edit a set of sequence read objects.</p>
+    <p>This method allows you to create and edit sets of sequence reads objects.</p>
 
