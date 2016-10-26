@@ -24,7 +24,8 @@ module ReadsSetEditor {
         string  report_ref;
     } save_read_set_output;
 
-    funcdef save_read_set (save_read_set_params params)  returns (save_read_set_output) authentication required;
+    /* don't need this any more */
+    /* funcdef save_read_set (save_read_set_params params)  returns (save_read_set_output) authentication required; */
 
     /* dummy method ... this is never actually invoked, rather SetAPI/save_reads_set_v1 is 
        actually, don't need this.
