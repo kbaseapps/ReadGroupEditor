@@ -31,7 +31,7 @@ This sample module contains one small method - save_read_set.
     ######################################### noqa
     VERSION = "0.1.0"
     GIT_URL = "ssh://git@github.com/eapearson/ReadsSetEditor"
-    GIT_COMMIT_HASH = "7e359543446a4fb1bd567cad7ae0b561fb580349"
+    GIT_COMMIT_HASH = "4db5400faeaf1c2e58fb7ca291e68602b2615201"
 
     #BEGIN_CLASS_HEADER
     # Class variables and functions can be defined in this block
