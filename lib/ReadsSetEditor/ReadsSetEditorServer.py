@@ -39,14 +39,14 @@ def get_config():
     retconfig = {}
     config = ConfigParser()
     config.read(get_config_file())
-    for nameval in config.items(get_service_name() or 'ReadSetEditor'):
+    for nameval in config.items(get_service_name() or 'ReadsSetEditor'):
         retconfig[nameval[0]] = nameval[1]
     return retconfig
 
 config = get_config()
 
-from ReadsSetEditor.ReadsSetEditorImpl import ReadSetEditor  # @IgnorePep8
-impl_ReadSetEditor = ReadSetEditor(config)
+from ReadsSetEditor.ReadsSetEditorImpl import ReadsSetEditor  # noqa @IgnorePep8
+impl_ReadsSetEditor = ReadsSetEditor(config)
 
 
 class JSONObjectEncoder(json.JSONEncoder):
@@ -171,7 +171,7 @@ class JSONRPCServiceCustom(JSONRPCService):
 
     def _handle_request(self, ctx, request):
         """Handles given request and returns its response."""
-        if self.method_data[request['method']].has_key('types'): # @IgnorePep8
+        if self.method_data[request['method']].has_key('types'):  # noqa @IgnorePep8
             self._validate_params_types(request['method'], request['params'])
 
         result = self._call_method(ctx, request)
@@ -318,7 +318,7 @@ class Application(object):
                                    context['method'], context['call_id'])
 
     def __init__(self):
-        submod = get_service_name() or 'ReadSetEditor'
+        submod = get_service_name() or 'ReadsSetEditor'
         self.userlog = log.log(
             submod, ip_address=True, authuser=True, module=True, method=True,
             call_id=True, changecallback=self.logcallback,
@@ -329,12 +329,16 @@ class Application(object):
         self.serverlog.set_log_level(6)
         self.rpc_service = JSONRPCServiceCustom()
         self.method_authentication = dict()
-        self.rpc_service.add(impl_ReadSetEditor.save_read_set,
-                             name='ReadSetEditor.save_read_set',
+        self.rpc_service.add(impl_ReadsSetEditor.save_read_set,
+                             name='ReadsSetEditor.save_read_set',
                              types=[dict])
-        self.method_authentication['ReadSetEditor.save_read_set'] = 'required'
-        self.rpc_service.add(impl_ReadSetEditor.status,
-                             name='ReadSetEditor.status',
+        self.method_authentication['ReadsSetEditor.save_read_set'] = 'required' # noqa
+        self.rpc_service.add(impl_ReadsSetEditor.save_reads_set_v1,
+                             name='ReadsSetEditor.save_reads_set_v1',
+                             types=[])
+        self.method_authentication['ReadsSetEditor.save_reads_set_v1'] = 'required' # noqa
+        self.rpc_service.add(impl_ReadsSetEditor.status,
+                             name='ReadsSetEditor.status',
                              types=[dict])
         authurl = config.get(AUTH) if config else None
         self.auth_client = _KBaseAuth(authurl)
@@ -388,7 +392,8 @@ class Application(object):
                         if token is None and auth_req == 'required':
                             err = JSONServerError()
                             err.data = (
-                                'Authentication required for ReadSetEditor ' +
+                                'Authentication required for ' +
+                                'ReadsSetEditor ' +
                                 'but no authentication header was passed')
                             raise err
                         elif token is None and auth_req == 'optional':
@@ -420,7 +425,7 @@ class Application(object):
                            }
                     trace = jre.trace if hasattr(jre, 'trace') else None
                     rpc_result = self.process_error(err, ctx, req, trace)
-                except Exception, e:
+                except Exception:
                     err = {'error': {'code': 0,
                                      'name': 'Unexpected Server Error',
                                      'message': 'An unexpected server error ' +
@@ -430,10 +435,10 @@ class Application(object):
                     rpc_result = self.process_error(err, ctx, req,
                                                     traceback.format_exc())
 
-        # print 'The request method was %s\n' % environ['REQUEST_METHOD']
-        # print 'The environment dictionary is:\n%s\n' % pprint.pformat(environ) @IgnorePep8
-        # print 'The request body was: %s' % request_body
-        # print 'The result from the method call is:\n%s\n' % \
+        # print 'Request method was %s\n' % environ['REQUEST_METHOD']
+        # print 'Environment dictionary is:\n%s\n' % pprint.pformat(environ)
+        # print 'Request body was: %s' % request_body
+        # print 'Result from the method call is:\n%s\n' % \
         #    pprint.pformat(rpc_result)
 
         if rpc_result:
@@ -469,11 +474,12 @@ class Application(object):
         return json.dumps(error)
 
     def now_in_utc(self):
-        # Taken from http://stackoverflow.com/questions/3401428/how-to-get-an-isoformat-datetime-string-including-the-default-timezone @IgnorePep8
+        # noqa Taken from http://stackoverflow.com/questions/3401428/how-to-get-an-isoformat-datetime-string-including-the-default-timezone @IgnorePep8
         dtnow = datetime.datetime.now()
         dtutcnow = datetime.datetime.utcnow()
         delta = dtnow - dtutcnow
-        hh, mm = divmod((delta.days * 24*60*60 + delta.seconds + 30) // 60, 60)
+        hh, mm = divmod((delta.days * 24 * 60 * 60 + delta.seconds + 30) // 60,
+                        60)
         return "%s%+02d:%02d" % (dtnow.isoformat(), hh, mm)
 
 application = Application()
@@ -502,9 +508,7 @@ try:
         print "Monkeypatching std libraries for async"
         from gevent import monkey
         monkey.patch_all()
-    uwsgi.applications = {
-        '': application
-        }
+    uwsgi.applications = {'': application}
 except ImportError:
     # Not available outside of wsgi, ignore
     pass

@@ -26,21 +26,9 @@ suggestions:
 #
 # Configure the display and description of parameters
 #
-parameters :
-    output_readset_name :
-        ui-name : |
-            Reads Set Name
-        short-hint : |
-            The name of the set of sequence reads (will be overwritten)
-    desc :
-        ui-name : |
-            Reads Set Description
-        short-hint : |
-            Description for this set of sequence reads
-    input_reads_list:
-        ui-name : |
-            Single-end or Paired-end reads object
-        short-hint : |
-            More than one reads object
+parameters : {}
+
+    
 description : |
     <p>This is a method to create and edit a set of sequence read objects.</p>
+

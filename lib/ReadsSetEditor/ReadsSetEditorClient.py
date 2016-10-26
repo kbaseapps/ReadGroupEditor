@@ -17,7 +17,7 @@ except:
     from baseclient import BaseClient as _BaseClient  # @Reimport
 
 
-class ReadSetEditor(object):
+class ReadsSetEditor(object):
 
     def __init__(
             self, url=None, timeout=30 * 60, user_id=None,
@@ -44,9 +44,18 @@ class ReadSetEditor(object):
            parameter "report_name" of String, parameter "report_ref" of String
         """
         return self._client.call_method(
-            'ReadSetEditor.save_read_set',
+            'ReadsSetEditor.save_read_set',
             [params], self._service_ver, context)
 
+    def save_reads_set_v1(self, context=None):
+        """
+        dummy method ... this is never actually invoked, rather SetAPI/save_reads_set_v1 is
+        :returns: instance of unspecified object
+        """
+        return self._client.call_method(
+            'ReadsSetEditor.save_reads_set_v1',
+            [], self._service_ver, context)
+
     def status(self, context=None):
-        return self._client.call_method('ReadSetEditor.status',
+        return self._client.call_method('ReadsSetEditor.status',
                                         [], self._service_ver, context)
