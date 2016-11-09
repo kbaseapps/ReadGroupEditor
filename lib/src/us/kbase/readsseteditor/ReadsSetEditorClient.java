@@ -15,8 +15,8 @@ import us.kbase.common.service.RpcContext;
 /**
  * <p>Original spec-file module name: ReadsSetEditor</p>
  * <pre>
- * A KBase module: ReadSetEditor
- * This sample module contains one small method - save_read_set.
+ * A KBase module: ReadsSetEditor
+ * This module contains just enough configuration to allow a reads set app to appear in the narratieve app panel. It does not have any method implementation.
  * </pre>
  */
 public class ReadsSetEditorClient {

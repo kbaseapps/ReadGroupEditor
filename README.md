@@ -3,4 +3,4 @@
 # Reads Set Editor
 ---
 
-This is the basic readme for this module. This module contains an example method that counts the contigs in a contig set.
+This module contains just enough configuration to allow a reads set app to appear in the narratieve app panel. It does not have any method implementation.

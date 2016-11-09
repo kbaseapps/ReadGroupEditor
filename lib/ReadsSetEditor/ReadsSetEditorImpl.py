@@ -19,8 +19,8 @@ class ReadsSetEditor:
     ReadsSetEditor
 
     Module Description:
-    A KBase module: ReadSetEditor
-This sample module contains one small method - save_read_set.
+    A KBase module: ReadsSetEditor
+This module contains just enough configuration to allow a reads set app to appear in the narratieve app panel. It does not have any method implementation.
     '''
 
     ######## WARNING FOR GEVENT USERS ####### noqa
@@ -31,7 +31,7 @@ This sample module contains one small method - save_read_set.
     ######################################### noqa
     VERSION = "0.1.0"
     GIT_URL = "ssh://git@github.com/eapearson/ReadsSetEditor"
-    GIT_COMMIT_HASH = "4db5400faeaf1c2e58fb7ca291e68602b2615201"
+    GIT_COMMIT_HASH = "2e73e0b5f84ca9df52f48d76985b996bc376ac66"
 
     #BEGIN_CLASS_HEADER
     # Class variables and functions can be defined in this block
