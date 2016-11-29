@@ -17,7 +17,7 @@ except:
     from baseclient import BaseClient as _BaseClient  # @Reimport
 
 
-class ReadSetEditor(object):
+class ReadsSetEditor(object):
 
     def __init__(
             self, url=None, timeout=30 * 60, user_id=None,
@@ -33,20 +33,6 @@ class ReadSetEditor(object):
             trust_all_ssl_certificates=trust_all_ssl_certificates,
             auth_svc=auth_svc)
 
-    def save_read_set(self, params, context=None):
-        """
-        :param params: instance of type "save_read_set_params" (** **  Method
-           for adding Reads objects to a Reads Set) -> structure: parameter
-           "workspace_name" of String, parameter "output_readset_name" of
-           String, parameter "input_reads_list" of list of String, parameter
-           "desc" of String
-        :returns: instance of type "save_read_set_output" -> structure:
-           parameter "report_name" of String, parameter "report_ref" of String
-        """
-        return self._client.call_method(
-            'ReadSetEditor.save_read_set',
-            [params], self._service_ver, context)
-
     def status(self, context=None):
-        return self._client.call_method('ReadSetEditor.status',
+        return self._client.call_method('ReadsSetEditor.status',
                                         [], self._service_ver, context)

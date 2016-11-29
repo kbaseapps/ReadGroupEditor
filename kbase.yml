@@ -2,13 +2,13 @@ module-name:
     ReadsSetEditor
 
 module-description:
-    A KBase module
+    This module contains just enough configuration to allow a reads set app to appear in the narratieve app panel. It does not have any method implementation.
 
 service-language:
     python
 
 module-version:
-    0.0.1
+    0.1.0
 
 owners:
     [marcin, mhenderson]

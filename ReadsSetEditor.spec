@@ -1,29 +1,10 @@
 /*
-A KBase module: ReadSetEditor
-This sample module contains one small method - save_read_set.
+A KBase module: ReadsSetEditor
+This module contains just enough configuration to allow a reads set app to appear in the narratieve app panel. It does not have any method implementation.
 */
 
 module ReadsSetEditor {
-
-    typedef string workspace_name;
-    typedef string output_readset_name;
-
-    /*
-    **
-    **  Method for adding Reads objects to a Reads Set
-    */
-    typedef structure {
-        string workspace_name;
-        string  output_readset_name;
-        list <string> input_reads_list;
-        string desc;
-    } save_read_set_params;
-
-    typedef structure {
-        string report_name;
-        string  report_ref;
-    } save_read_set_output;
-
-    funcdef save_read_set (save_read_set_params params)  returns (save_read_set_output) authentication required;
-
+    /* dummy method ... this is never actually invoked, rather SetAPI/save_reads_set_v1 is 
+       actually, don't need this.
+    funcdef save_reads_set_v1() returns (UnspecifiedObject outputs) authentication required;*/
 };

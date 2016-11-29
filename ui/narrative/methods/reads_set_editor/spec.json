@@ -1,0 +1,25 @@
+{
+    "ver": "0.1.0",
+    "authors": [
+        "marcin", "eapearson"
+    ],
+    "contact": "https://kbase.us/contact-us/",
+    "categories": ["active"],
+    "app_type": "editor",
+    "visible": true,
+    "widgets": {
+        "input": "reads_set_editor",
+        "output": null
+    },    
+    "parameters": [ ],
+    "behavior": {
+        "service-mapping": {
+            "url": "",
+            "name": "SetAPI",
+            "method": "save_reads_set_v1",
+            "input_mapping": [],
+            "output_mapping": []
+        }
+    },
+    "job_id_output_field": "docker"
+}
